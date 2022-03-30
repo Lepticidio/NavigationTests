@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-
+    public bool m_bFlatExtremes;
     float m_fInverseWidth, m_fInverseHeight, m_fCellSizeFactor = 0.05f;
     public int m_iWidth, m_iHeight, m_iDepth;
     public float m_fScale, m_fOffsetX, m_fOffsetY, m_fSeaLevel, m_fSeaDepth;
@@ -50,7 +50,11 @@ public class MapGenerator : MonoBehaviour
 
                 int remainderI = (int)((float)i % (m_iWidth * fInverseHmWidth));
                 int remainderJ = (int)((float)j % (m_iHeight * fInverseHmWidth));
-                if (fAltitude < m_fSeaLevel)
+                if(!m_bFlatExtremes)
+                {
+                    fTempHeightMap[j, i] = fAltitude;
+                }
+                else if (fAltitude < m_fSeaLevel)
                 {
                     if (remainderI == 0 && remainderJ == 0)
                     {
