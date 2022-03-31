@@ -30,5 +30,5 @@ Material:
     - _oBottomWaterColor: {r: 0, g: 0, b: 0, a: 1}
     - _oMiddleSurfaceColor: {r: 0.4339623, g: 0.3251257, b: 0.21043077, a: 1}
     - _oTopSurfaceColor: {r: 1, g: 1, b: 1, a: 1}
-    - _oTopWaterColor: {r: 0, g: 0.61362386, b: 1, a: 1}
+    - _oTopWaterColor: {r: 0, g: 0.6666665, b: 1, a: 1}
   m_BuildTextureStacks: []
