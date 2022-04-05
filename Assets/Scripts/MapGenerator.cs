@@ -4,41 +4,32 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    public bool m_bFlatExtremes, m_bFloatingObstacles, m_bObstacleSizeVariation, m_bUniformObstacles;
     float m_fInverseWidth, m_fInverseHeight, m_fCellSizeFactor = 0.05f;
-    public int m_iWidth, m_iHeight, m_iDepth, m_iObstacleAbundance;
-    public int[] m_tObstacleCounts;
+    public int m_iWidth, m_iHeight, m_iDepth;
     public float[,] m_tAltitudes;
-    public float m_fScale, m_fOffsetX, m_fOffsetY, m_fSeaLevel, m_fSeaDepth, m_fMinSize, m_fMaxSize;
+    public float m_fScale, m_fOffsetX, m_fOffsetY, m_fSeaLevel, m_fSeaDepth;
     public Transform oObstacleParent;
-    public GameObject[] m_tObstacles;
     public Terrain m_oTerr;
+    public MapType m_oCurrentType;
     // Start is called before the first frame update
     void Start()
     {
-        GenerateTerrain();
-        GenerateObstacles();
+        m_oTerr.gameObject.SetActive(!m_oCurrentType.m_bNoTerrain);
+        if(!m_oCurrentType.m_bNoTerrain)
+        {
+            GenerateTerrain(m_oCurrentType);
+        }
+        GenerateObstacles(m_oCurrentType);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    void PreparateTerrain()
-    {
-        //m_oTerr.terrainData.SetHeights(0, 0, heights);
-    }
-
-    void GenerateTerrain()
+    void GenerateTerrain(MapType _oType)
     {
 
 
         m_oTerr.terrainData.size = new Vector3(m_iWidth * m_fCellSizeFactor, m_iDepth * m_fCellSizeFactor, m_iHeight * m_fCellSizeFactor);
         m_oTerr.gameObject.transform.position = new Vector3(-m_oTerr.terrainData.size.x * 0.5f, -m_oTerr.terrainData.size.y * m_fSeaLevel, -m_oTerr.terrainData.size.z * 0.5f);
 
-        m_tAltitudes = new float[2049, 2049];
+        m_tAltitudes = new float[m_iWidth + 1, m_iHeight + 1];
 
         float fHeightMapWidth = m_oTerr.terrainData.heightmapResolution;
         float fInverseHmWidth = 1f / (float)(fHeightMapWidth - 1);
@@ -55,7 +46,7 @@ public class MapGenerator : MonoBehaviour
 
                 int remainderI = (int)((float)i % (m_iWidth * fInverseHmWidth));
                 int remainderJ = (int)((float)j % (m_iHeight * fInverseHmWidth));
-                if(!m_bFlatExtremes)
+                if(!_oType.m_bFlatExtremes)
                 {
                     m_tAltitudes[j, i] = fAltitude;
                 }
@@ -84,29 +75,29 @@ public class MapGenerator : MonoBehaviour
         }
         m_oTerr.terrainData.SetHeights(0, 0, m_tAltitudes);
     }
-    public void GenerateObstacles()
+    public void GenerateObstacles(MapType _oType)
     {
-        for (int i = 0; i < m_tObstacleCounts.Length; i++)
+        for (int i = 0; i < _oType.m_tObstacleCounts.Length; i++)
         {
-            GameObject oPrefab = m_tObstacles[i];
+            GameObject oPrefab = _oType.m_tObstacles[i];
 
-            for (int j = 0; j < m_tObstacleCounts[i] * m_iObstacleAbundance; j++)
+            for (int j = 0; j < _oType.m_tObstacleCounts[i] * _oType.m_iObstacleAbundance; j++)
             {
-                int iX = Random.Range(0, m_tAltitudes.GetLength(0));
-                int iZ = Random.Range(0, m_tAltitudes.GetLength(0));
-                float fY = m_tAltitudes[iX, iZ];
+                int iX = Random.Range(0, m_iWidth + 1);
+                int iZ = Random.Range(0, m_iHeight + 1);
 
-                if(m_bFloatingObstacles)
+                float fY = Random.Range(0f, 1f);
+                if (!_oType.m_bFloatingObstacles)
                 {
-                    fY = Random.Range(0f, 1f);
+                    fY = m_tAltitudes[iX, iZ];
                 }
 
                 GameObject oItemGo = Instantiate(oPrefab, new Vector3((iX - m_iWidth/2) * m_fCellSizeFactor, fY * m_iDepth * m_fCellSizeFactor - (m_iDepth*m_fCellSizeFactor)/2, (iZ - m_iHeight/2) * m_fCellSizeFactor), Quaternion.identity);
                 oItemGo.transform.SetParent(oObstacleParent);
 
-                if (m_bObstacleSizeVariation)
+                if (_oType.m_bObstacleSizeVariation)
                 {
-                    ChangeObstacleSize(oItemGo.transform);
+                    _oType.ChangeObstacleTransform(oItemGo.transform);
                 }                
             }
         }
@@ -119,19 +110,5 @@ public class MapGenerator : MonoBehaviour
         float fYPerl = (float)_iY * m_fInverseHeight * m_fScale + m_fOffsetY;
         float fPerlinNoise = Mathf.PerlinNoise(fXPerl, fYPerl);
         return fPerlinNoise;
-    }
-
-    public void ChangeObstacleSize(Transform _oTransform)
-    {
-        Vector3 vOriginalLocal = _oTransform.localScale;
-        float fRandomX = Random.Range(m_fMinSize, m_fMaxSize);
-        float fRandomY = Random.Range(m_fMinSize, m_fMaxSize);
-        float fRandomZ = Random.Range(m_fMinSize, m_fMaxSize);
-        if(m_bUniformObstacles)
-        {
-            fRandomY = fRandomX;
-            fRandomZ = fRandomX;
-        }
-        _oTransform.localScale = new Vector3(vOriginalLocal.x * fRandomX, vOriginalLocal.y * fRandomY, vOriginalLocal.z * fRandomZ);
     }
 }

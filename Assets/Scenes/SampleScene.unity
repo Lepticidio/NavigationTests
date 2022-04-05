@@ -434,25 +434,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9797fedb636967d469d33c3045395908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bFlatExtremes: 1
-  m_bFloatingObstacles: 0
-  m_bObstacleSizeVariation: 0
   m_iWidth: 2048
   m_iHeight: 2048
   m_iDepth: 1024
-  m_iObstacleAbundance: 100
-  m_tObstacleCounts: 01000000
   m_fScale: 2
   m_fOffsetX: 0
   m_fOffsetY: 0
   m_fSeaLevel: 0.5
   m_fSeaDepth: 0.1
-  m_fMinSize: 0.25
-  m_fMaxSize: 4
   oObstacleParent: {fileID: 1175354595}
-  m_tObstacles:
-  - {fileID: 7562016990832095360, guid: 9e6f5dcc61215534fbe7325071a62c76, type: 3}
   m_oTerr: {fileID: 1345738814}
+  m_oCurrentType: {fileID: 11400000, guid: 213d473c047bee341a8b77553b1e2b49, type: 2}
 --- !u!4 &2037424131
 Transform:
   m_ObjectHideFlags: 0
