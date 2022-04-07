@@ -12,7 +12,7 @@ public class MapGenerator : MonoBehaviour
     public Terrain m_oTerr;
     public MapType m_oCurrentType;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         m_oTerr.gameObject.SetActive(!m_oCurrentType.m_bNoTerrain);
         if(!m_oCurrentType.m_bNoTerrain)
