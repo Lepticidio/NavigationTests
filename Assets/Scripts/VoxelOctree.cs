@@ -5,12 +5,14 @@ using UnityEngine;
 public class VoxelOctree : MonoBehaviour
 {
     OctreeNode m_oRoot;
+    public List<OctreeNode> m_tFreeNodes = new List<OctreeNode>();
     public float m_fSize = 2048;
     // Start is called before the first frame update
     void Start()
     {
         m_oRoot = new OctreeNode(Vector3.zero, m_fSize * 0.5f);
-        m_oRoot.Subdivide(1);
+        m_oRoot.Subdivide(1, m_tFreeNodes);
+        ConnectNeighbours();
     }
 
     // Update is called once per frame
@@ -26,6 +28,14 @@ public class VoxelOctree : MonoBehaviour
             m_oRoot.Draw(m_fSize*0.5f);
         }
     }
+
+    void ConnectNeighbours()
+    {
+        for(int i = 0; i < m_tFreeNodes.Count; i++)
+        {
+            m_tFreeNodes[i].ConnectNeighbours();
+        }
+    }
 }
 public class OctreeNode
 {
@@ -39,8 +49,8 @@ public class OctreeNode
     public Vector3Int m_vLevelCoords;
     public OctreeNode m_oParent, m_oRoot;
 
-    private Color m_oMinColor = new Color(1, 0, 0, 0.25f);
-    private Color m_oMaxColor = new Color(0, 0f, 1f, 1f);
+    private Color m_oMinColor = new Color(1f, 1f, 1f, 0.25f);
+    private Color m_oMaxColor = new Color(0f, 0f, 0f, 1f);
 
     public OctreeNode(Vector3 _vPosition, float _fHalfSize, OctreeNode _oParent = null)
     {
@@ -56,9 +66,8 @@ public class OctreeNode
         {
             m_oRoot = this;
         }
-        Debug.Log("Created node at " + m_vPosition + " with half size " + _fHalfSize);
     }
-    public bool Subdivide(float _fMinSize)
+    public void Subdivide(float _fMinSize, List<OctreeNode> _tFreeList)
     {
         if (CheckCollision() && m_fHalfSize > _fMinSize)
         {
@@ -95,18 +104,17 @@ public class OctreeNode
                 }
 
                 OctreeNode oChildNode = new OctreeNode(vNewPos, fNewHalfSize, this);
+                m_tSubNodes[i] = oChildNode;
                 oChildNode.m_iDepth = m_iDepth + 1;
                 oChildNode.m_iLocalIndex = i;
                 oChildNode.CalculateLevelCoords();
-                oChildNode.Subdivide(_fMinSize);
-                m_tSubNodes[i] = oChildNode;
+                oChildNode.Subdivide(_fMinSize, _tFreeList);
             }
-            return true;
         }
         else
         {
             m_bFree = true;
-            return false;
+            _tFreeList.Add(this);
         }
     }
 
@@ -171,6 +179,11 @@ public class OctreeNode
                 oNode.Draw(_fMaxSize);
             }
         }
+        Gizmos.color = new Color (Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.x), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.y), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.z), 1f);
+        for (int i = 0; i < m_tNeighbors.Count; i++)
+        {
+            Gizmos.DrawLine(m_vPosition, m_tNeighbors[i].m_vPosition);
+        }
     }
     public Vector3 GetPosition()
     {
@@ -182,25 +195,38 @@ public class OctreeNode
     }
     public void Connect(OctreeNode _oNode)
     {
-        if(m_bFree && _oNode.m_bFree && !m_tNeighbors.Contains(_oNode))
+        if(_oNode != null && m_bFree && _oNode.m_bFree && _oNode != this && !m_tNeighbors.Contains(_oNode))
         {
             m_tNeighbors.Add(_oNode);
             _oNode.m_tNeighbors.Add(this);
+            //Debug.Log("Connected nodes " + _oNode.m_iDepth + ", " + _oNode.m_vLevelCoords + " - " + m_iDepth + ", " + m_vLevelCoords);
         }
     }
-    public OctreeNode GetNodeFromCoordinates(Vector3Int _vLevelCoordinates, int _iDepth)
+    public OctreeNode GetFreeNodeFromCoordinates(Vector3Int _vLevelCoordinates, int _iDepth)
     {
-        OctreeNode oNode = m_oRoot;
-        for (int i = 0; i < _iDepth; i++)
-        {
-            if(!m_bFree)
-            {
-                int iBinaryDigit = (int)Mathf.Pow(2, _iDepth);
-                int iFirstIndexDigit = (_vLevelCoordinates.x & iBinaryDigit) == iBinaryDigit ? 4 : 0;
-                int iSecondIndexDigit = (_vLevelCoordinates.y & iBinaryDigit) == iBinaryDigit ? 2 : 0;
-                int iThirdIndexDigit = (_vLevelCoordinates.z & iBinaryDigit) == iBinaryDigit ? 1 : 0;
+        OctreeNode oTempNode = m_oRoot;
+        OctreeNode oResult = null;
 
-                oNode = oNode.m_tSubNodes[iFirstIndexDigit + iSecondIndexDigit + iThirdIndexDigit];
+        for (int i = 0; i < _iDepth + 1; i++)
+        {
+            if(oTempNode != null)
+            {
+                if (oTempNode.m_bFree)
+                {
+                    oResult = oTempNode;
+                }
+
+                int iBinaryDigit = (int)Mathf.Pow(2, _iDepth - oTempNode.m_iDepth);
+                int iIndex = (_vLevelCoordinates.x & iBinaryDigit) == iBinaryDigit ? 4 : 0;
+                iIndex += (_vLevelCoordinates.y & iBinaryDigit) == iBinaryDigit ? 2 : 0;
+                iIndex += (_vLevelCoordinates.z & iBinaryDigit) == iBinaryDigit ? 1 : 0;
+
+                //Debug.Log("Searched index: " + iIndex + " for node " + _iDepth + ", " + _vLevelCoordinates + " at binary digit " + iBinaryDigit + " in node " + oTempNode.m_iDepth +", " + oTempNode.m_vLevelCoords + " has subnodes? " + (oTempNode.m_tSubNodes != null).ToString());
+
+                if (oTempNode.m_tSubNodes != null && oTempNode.m_tSubNodes.Length > iIndex)
+                {
+                    oTempNode = oTempNode.m_tSubNodes[iIndex];
+                }
 
             }
             else
@@ -209,6 +235,15 @@ public class OctreeNode
             }
 
         }
-        return oNode;
+        return oResult;
+    }
+    public void ConnectNeighbours()
+    {
+        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.up, m_iDepth));
+        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.down, m_iDepth));
+        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.right, m_iDepth));
+        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.left, m_iDepth));
+        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.forward, m_iDepth));
+        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.back, m_iDepth));
     }
 }
