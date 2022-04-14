@@ -445,7 +445,7 @@ MonoBehaviour:
   m_fSeaDepth: 0.1
   oObstacleParent: {fileID: 1175354595}
   m_oTerr: {fileID: 1345738814}
-  m_oCurrentType: {fileID: 11400000, guid: 213d473c047bee341a8b77553b1e2b49, type: 2}
+  m_oCurrentType: {fileID: 11400000, guid: 51dbe6cbce689ab47a6ee20f9afe0e8b, type: 2}
 --- !u!4 &2037424131
 Transform:
   m_ObjectHideFlags: 0
@@ -472,7 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b9b8aaadea5cf49a024e4187930313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_fSize: 8
+  m_fSize: 128
 --- !u!1 &2116855135
 GameObject:
   m_ObjectHideFlags: 0

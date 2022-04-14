@@ -49,8 +49,8 @@ public class OctreeNode
     public Vector3Int m_vLevelCoords;
     public OctreeNode m_oParent, m_oRoot;
 
-    private Color m_oMinColor = new Color(0.0f, 0.0f, 0.0f, 0.1f);
-    private Color m_oMaxColor = new Color(0f, 0f, 0f, 0.1f);
+    private Color m_oMinColor = new Color(1.0f, 0.0f, 1.0f, 0.2f);
+    private Color m_oMaxColor = new Color(0f, 0f, 1.0f, 0.2f);
 
     public OctreeNode(Vector3 _vPosition, float _fHalfSize, OctreeNode _oParent = null)
     {
@@ -170,8 +170,8 @@ public class OctreeNode
     }
     public void Draw(float _fMaxSize)
     {
-        Gizmos.color = Color.Lerp(m_oMinColor, m_oMaxColor, Mathf.Log(m_fHalfSize, 2) / Mathf.Log(_fMaxSize, 2));
-        Gizmos.DrawWireCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
+        //Gizmos.color = Color.Lerp(m_oMinColor, m_oMaxColor, Mathf.Log(m_fHalfSize, 2) / Mathf.Log(_fMaxSize, 2));
+        //Gizmos.DrawWireCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
         
         if (m_tSubNodes != null)
         {
@@ -181,12 +181,12 @@ public class OctreeNode
             }
         }
 
-        Gizmos.color = new Color(Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.x), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.y), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.z), 0.5f);
+        Gizmos.color = new Color(Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.x), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.y), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.z), 0.125f);
         for (int i = 0; i < m_tNeighbors.Count; i++)
         {
             Gizmos.DrawLine(m_vPosition, m_tNeighbors[i].m_vPosition);
         }
-        
+
     }
     public Vector3 GetPosition()
     {
