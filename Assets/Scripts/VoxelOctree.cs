@@ -49,8 +49,8 @@ public class OctreeNode
     public Vector3Int m_vLevelCoords;
     public OctreeNode m_oParent, m_oRoot;
 
-    private Color m_oMinColor = new Color(1f, 1f, 1f, 0.25f);
-    private Color m_oMaxColor = new Color(0f, 0f, 0f, 1f);
+    private Color m_oMinColor = new Color(0.0f, 0.0f, 0.0f, 0.1f);
+    private Color m_oMaxColor = new Color(0f, 0f, 0f, 0.1f);
 
     public OctreeNode(Vector3 _vPosition, float _fHalfSize, OctreeNode _oParent = null)
     {
@@ -69,7 +69,8 @@ public class OctreeNode
     }
     public void Subdivide(float _fMinSize, List<OctreeNode> _tFreeList)
     {
-        if (CheckCollision() && m_fHalfSize > _fMinSize)
+        bool bFree = !CheckCollision();
+        if (!bFree && m_fHalfSize > _fMinSize)
         {
             m_tSubNodes = new OctreeNode[8];
             float fNewHalfSize = m_fHalfSize * 0.5f;
@@ -111,7 +112,7 @@ public class OctreeNode
                 oChildNode.Subdivide(_fMinSize, _tFreeList);
             }
         }
-        else
+        else if(bFree)
         {
             m_bFree = true;
             _tFreeList.Add(this);
@@ -166,24 +167,26 @@ public class OctreeNode
             vParentCoords = m_oParent.m_vLevelCoords;
         }
         m_vLevelCoords = vParentCoords * 2 + new Vector3Int(GetIntLocalX(), GetIntLocalY(), GetIntLocalZ());
-
     }
     public void Draw(float _fMaxSize)
     {
-        Gizmos.color = Color.Lerp(m_oMinColor, m_oMaxColor, Mathf.Log(m_fHalfSize,2) / Mathf.Log(_fMaxSize, 2));
-        Gizmos.DrawWireCube(m_vPosition, Vector3.one * m_fHalfSize*2);
-        if(m_tSubNodes != null)
+        Gizmos.color = Color.Lerp(m_oMinColor, m_oMaxColor, Mathf.Log(m_fHalfSize, 2) / Mathf.Log(_fMaxSize, 2));
+        Gizmos.DrawWireCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
+        
+        if (m_tSubNodes != null)
         {
             foreach (OctreeNode oNode in m_tSubNodes)
             {
                 oNode.Draw(_fMaxSize);
             }
         }
-        Gizmos.color = new Color (Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.x), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.y), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.z), 1f);
+
+        Gizmos.color = new Color(Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.x), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.y), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.z), 0.5f);
         for (int i = 0; i < m_tNeighbors.Count; i++)
         {
             Gizmos.DrawLine(m_vPosition, m_tNeighbors[i].m_vPosition);
         }
+        
     }
     public Vector3 GetPosition()
     {
@@ -199,7 +202,6 @@ public class OctreeNode
         {
             m_tNeighbors.Add(_oNode);
             _oNode.m_tNeighbors.Add(this);
-            //Debug.Log("Connected nodes " + _oNode.m_iDepth + ", " + _oNode.m_vLevelCoords + " - " + m_iDepth + ", " + m_vLevelCoords);
         }
     }
     public OctreeNode GetFreeNodeFromCoordinates(Vector3Int _vLevelCoordinates, int _iDepth)
@@ -209,41 +211,57 @@ public class OctreeNode
 
         for (int i = 0; i < _iDepth + 1; i++)
         {
-            if(oTempNode != null)
+            if (oTempNode != null)
             {
                 if (oTempNode.m_bFree)
                 {
                     oResult = oTempNode;
                 }
 
-                int iBinaryDigit = (int)Mathf.Pow(2, _iDepth - oTempNode.m_iDepth);
+                int iBinaryDigit = (int)Mathf.Pow(2, _iDepth - (oTempNode.m_iDepth +1 ));
                 int iIndex = (_vLevelCoordinates.x & iBinaryDigit) == iBinaryDigit ? 4 : 0;
                 iIndex += (_vLevelCoordinates.y & iBinaryDigit) == iBinaryDigit ? 2 : 0;
-                iIndex += (_vLevelCoordinates.z & iBinaryDigit) == iBinaryDigit ? 1 : 0;
-
-                //Debug.Log("Searched index: " + iIndex + " for node " + _iDepth + ", " + _vLevelCoordinates + " at binary digit " + iBinaryDigit + " in node " + oTempNode.m_iDepth +", " + oTempNode.m_vLevelCoords + " has subnodes? " + (oTempNode.m_tSubNodes != null).ToString());
+                iIndex += (_vLevelCoordinates.z & iBinaryDigit) == iBinaryDigit ? 1 : 0;        
 
                 if (oTempNode.m_tSubNodes != null && oTempNode.m_tSubNodes.Length > iIndex)
                 {
                     oTempNode = oTempNode.m_tSubNodes[iIndex];
                 }
-
             }
             else
             {
                 i = _iDepth;
             }
-
         }
         return oResult;
     }
     public void ConnectNeighbours()
     {
-        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.up, m_iDepth));
-        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.down, m_iDepth));
-        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.right, m_iDepth));
-        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.left, m_iDepth));
-        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.forward, m_iDepth));
-        Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.back, m_iDepth));
+        float fMaxSize = Mathf.Pow(2, m_iDepth);
+        if (m_vLevelCoords.x < fMaxSize - 1)
+        {
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.right, m_iDepth));
+        }
+        if(m_vLevelCoords.x > 0)
+        {
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.left, m_iDepth));
+
+        }
+        if (m_vLevelCoords.y < fMaxSize - 1)
+        {
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.up, m_iDepth));
+        }
+        if (m_vLevelCoords.y > 0)
+        {
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.down, m_iDepth));
+        }
+        if (m_vLevelCoords.z < fMaxSize - 1)
+        {
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.forward, m_iDepth));
+        }
+        if (m_vLevelCoords.z > 0)
+        {
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.back, m_iDepth));
+        }
     }
 }
