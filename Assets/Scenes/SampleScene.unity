@@ -445,7 +445,7 @@ MonoBehaviour:
   m_fSeaDepth: 0.1
   oObstacleParent: {fileID: 1175354595}
   m_oTerr: {fileID: 1345738814}
-  m_oCurrentType: {fileID: 11400000, guid: 51dbe6cbce689ab47a6ee20f9afe0e8b, type: 2}
+  m_oCurrentType: {fileID: 11400000, guid: 7b9595b87509fd84b8ed552fff51a456, type: 2}
 --- !u!4 &2037424131
 Transform:
   m_ObjectHideFlags: 0
