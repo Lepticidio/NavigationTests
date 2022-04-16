@@ -2,37 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AStar : MonoBehaviour
+public class AStar : Pathfinder
 {
-    public List<AStarNode> m_tAll = new List<AStarNode>();
     public List<AStarNode> m_tOpen = new List<AStarNode>();
     public List<AStarNode> m_tClosed = new List<AStarNode>();
+    public Dictionary<Node, AStarNode> m_tAll = new Dictionary<Node, AStarNode>();
     // Start is called before the first frame update
 
-    List<Node> GetPath (Vector3 _vStart, Vector3 _vEnd, NodeMap _oMap)
+    public override List<Vector3> GetPath (Vector3 _vStart, Vector3 _vEnd, NodeMap _oMap)
     {
-        List<Node> tResult = new List<Node>();
+        List<Vector3> tResult = new List<Vector3>();
         if(m_tAll.Count == 0)
         {
             for (int i = 0; i < _oMap.m_tFreeNodes.Count; i++)
             {
-                m_tAll.Add(_oMap.m_tFreeNodes[i] as AStarNode);
+                m_tAll.Add( AStarNode( _oMap.m_tFreeNodes[i] as AStarNode));
             }
         }
 
+        Debug.Log("Tries to get path");
 
         AStarNode oStartNode = _oMap.GetNodeFromPosition(_vStart) as AStarNode;
         AStarNode oEndNode = _oMap.GetNodeFromPosition(_vEnd) as AStarNode;
 
-        oStartNode.CalculateH(_vEnd);
-        oEndNode.m_fH = 0;
-        oStartNode.m_fG = 0;
-        oStartNode.CalculateF();
-
         bool bEnd = oStartNode == null || oEndNode == null;
+
+        Debug.Log("Start null?: " + (oStartNode == null).ToString());
+        Debug.Log(" End null?: " + (oEndNode == null).ToString());
+
+        if (!bEnd)
+        {
+            oStartNode.CalculateH(_vEnd);
+            oEndNode.m_fH = 0;
+            oStartNode.m_fG = 0;
+            oStartNode.CalculateF();
+            m_tOpen.Add(oStartNode);
+        }
         AStarNode oCurrent = null;
         while (!bEnd)
         {
+            Debug.Log("In loop");
             oCurrent = GetLowestOpenF();
             m_tOpen.Remove(oCurrent);
             m_tClosed.Add(oCurrent);
@@ -73,7 +82,7 @@ public class AStar : MonoBehaviour
 
         while (oCurrent.m_oParent != null)
         {
-            tResult.Add(oCurrent);
+            tResult.Add(oCurrent.m_vPosition);
             oCurrent = oCurrent.m_oParent;
         }
 
@@ -91,6 +100,7 @@ public class AStar : MonoBehaviour
                 oResult = m_tOpen[i];
             }
         }
+        Debug.Log("LowestF null?: " + oResult == null);
         return oResult;
     }
 }

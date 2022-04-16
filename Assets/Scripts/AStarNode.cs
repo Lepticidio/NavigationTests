@@ -16,6 +16,13 @@ public class AStarNode : Node
         m_oParent = _oParent;
     }
 
+    AStarNode(Node _oNode)
+    {
+        m_vPosition = _oNode.m_vPosition;
+        m_bFree = _oNode.m_bFree;
+        m_tNeighbors = _oNode.m_tNeighbors;
+    }
+
     public void CalculateH(Vector3 _vGoal)
     {
         m_fH = (_vGoal - m_vPosition).magnitude;

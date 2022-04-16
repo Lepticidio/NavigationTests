@@ -5,18 +5,20 @@ using UnityEngine;
 
 public class OctreeNode : Node
 {
-    int m_iDepth = 0, m_iLocalIndex = 0;
+    public int m_iDepth = 0, m_iLocalIndex = 0;
     public float m_fHalfSize;
     public OctreeNode[] m_tSubNodes;
     protected Vector3 m_vHalfExtents;
     public Vector3Int m_vLevelCoords;
     public OctreeNode m_oParent, m_oRoot;
 
-    private Color m_oMinColor = new Color(1.0f, 0.0f, 1.0f, 0.2f);
+    private Color m_oMinColor = new Color(1.0f, 0.0f, 0.0f, 0.2f);
     private Color m_oMaxColor = new Color(0f, 0f, 1.0f, 0.2f);
+    private Color m_oRandom;
 
     public OctreeNode(Vector3 _vPosition, float _fHalfSize, OctreeNode _oParent = null)
     {
+        m_oRandom = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 0.1f);
         m_vPosition = _vPosition;
         m_fHalfSize = _fHalfSize;
         m_vHalfExtents = new Vector3(_fHalfSize, _fHalfSize, _fHalfSize);
@@ -133,8 +135,10 @@ public class OctreeNode : Node
     }
     public void Draw(float _fMaxSize)
     {
-        //Gizmos.color = Color.Lerp(m_oMinColor, m_oMaxColor, Mathf.Log(m_fHalfSize, 2) / Mathf.Log(_fMaxSize, 2));
-        //Gizmos.DrawWireCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
+        Gizmos.color = Color.Lerp(m_oMinColor, m_oMaxColor, Mathf.Log(m_fHalfSize, 2) / Mathf.Log(_fMaxSize, 2));
+        Gizmos.DrawWireCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
+        Gizmos.color = m_oRandom;
+        Gizmos.DrawCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
 
         if (m_tSubNodes != null)
         {
@@ -144,11 +148,11 @@ public class OctreeNode : Node
             }
         }
 
-        Gizmos.color = new Color(Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.x), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.y), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.z), 0.125f);
-        for (int i = 0; i < m_tNeighbors.Count; i++)
-        {
-            Gizmos.DrawLine(m_vPosition, m_tNeighbors[i].m_vPosition);
-        }
+        //Gizmos.color = new Color(Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.x), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.y), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.z), 0.125f);
+        //for (int i = 0; i < m_tNeighbors.Count; i++)
+        //{
+        //    Gizmos.DrawLine(m_vPosition, m_tNeighbors[i].m_vPosition);
+        //}
 
     }
     public Vector3 GetPosition()
@@ -157,7 +161,7 @@ public class OctreeNode : Node
     }
     public bool CheckCollision()
     {
-        return Physics.OverlapBox(m_vPosition, m_vHalfExtents).Length > 0;
+        return Physics.OverlapBox(m_vPosition, m_vHalfExtents, Quaternion.identity, ~LayerMask.GetMask("Agent")).Length > 0;
     }
     public void Connect(OctreeNode _oNode)
     {

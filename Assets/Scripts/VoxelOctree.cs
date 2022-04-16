@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VoxelOctree : NodeMap
 {
+    public bool m_bDebug;
     OctreeNode m_oRoot;
     public float m_fSize = 2048;
     // Start is called before the first frame update
@@ -16,7 +17,7 @@ public class VoxelOctree : NodeMap
 
     void OnDrawGizmos()
     {
-        if(m_oRoot != null)
+        if(m_oRoot != null && m_bDebug)
         {
             m_oRoot.Draw(m_fSize*0.5f);
         }
@@ -42,13 +43,16 @@ public class VoxelOctree : NodeMap
             bool bInVoxelY = _vPosition.y > vNodePosition.y - oNode.m_fHalfSize && _vPosition.y < vNodePosition.y + oNode.m_fHalfSize;
             bool bInVoxelZ = _vPosition.z > vNodePosition.z - oNode.m_fHalfSize && _vPosition.z < vNodePosition.z + oNode.m_fHalfSize;
 
+            Debug.Log("Node " + oNode.m_iDepth + ", " + oNode.m_iLocalIndex + " - X?: " + bInVoxelX + " Y?: " + bInVoxelY + " Z?: " + bInVoxelZ + " - Position " + oNode.m_vPosition + " radius " + oNode.m_fHalfSize + " compared to " + _vPosition);
+            
             if(bInVoxelX && bInVoxelY && bInVoxelZ)
             {
+                Debug.Log("Result found");
                 oResult = oNode;
                 i = m_tFreeNodes.Count;
             }
         }
-
+        Debug.Log("Result is null?: " + (oResult == null).ToString());
         return oResult;
     }
 }
