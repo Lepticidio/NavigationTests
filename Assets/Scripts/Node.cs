@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node
+public abstract class Node
 {
     public bool m_bFree = false;
     public Vector3 m_vPosition;
-    public List<Node> m_tNeighbors = new List<Node>();
+    public List<Node> m_tNeighbours = new List<Node>();
+    public NodePathfindingInfo m_oPathInfo;
 
     public override bool Equals (object obj)
     {

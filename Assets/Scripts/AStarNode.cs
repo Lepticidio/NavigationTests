@@ -2,34 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AStarNode : Node
+public class AStarNode : NodePathfindingInfo
 {
     public float m_fG = Mathf.Infinity, m_fH = Mathf.Infinity, m_fF = Mathf.Infinity;
     public AStarNode m_oParent;
 
-    public AStarNode (Vector3 _vPosition, AStarNode _oParent, float _fG = Mathf.Infinity, float _fH = Mathf.Infinity, float _fF = Mathf.Infinity)
+    public AStarNode (Node _oNode)
     {
-        m_vPosition = _vPosition;
-        m_fG = _fG;
-        m_fH = _fH;
-        m_fF = _fF;
-        m_oParent = _oParent;
-    }
-
-    AStarNode(Node _oNode)
-    {
-        m_vPosition = _oNode.m_vPosition;
-        m_bFree = _oNode.m_bFree;
-        m_tNeighbors = _oNode.m_tNeighbors;
+        m_oNode = _oNode;
+        m_oNode.m_oPathInfo = this;
     }
 
     public void CalculateH(Vector3 _vGoal)
     {
-        m_fH = (_vGoal - m_vPosition).magnitude;
+        m_fH = (_vGoal - GetPosition()).magnitude;
     }
     public void CalculateG(AStarNode _oPrevious)
     {
-        float fCandidateG = _oPrevious.m_fG + (m_vPosition - _oPrevious.m_vPosition).magnitude;
+        float fCandidateG = _oPrevious.m_fG + (GetPosition() - _oPrevious.GetPosition()).magnitude;
 
         if(fCandidateG < m_fG)
         {

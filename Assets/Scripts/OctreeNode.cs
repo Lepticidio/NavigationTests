@@ -137,8 +137,8 @@ public class OctreeNode : Node
     {
         Gizmos.color = Color.Lerp(m_oMinColor, m_oMaxColor, Mathf.Log(m_fHalfSize, 2) / Mathf.Log(_fMaxSize, 2));
         Gizmos.DrawWireCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
-        Gizmos.color = m_oRandom;
-        Gizmos.DrawCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
+        //Gizmos.color = m_oRandom;
+        //Gizmos.DrawCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
 
         if (m_tSubNodes != null)
         {
@@ -165,10 +165,10 @@ public class OctreeNode : Node
     }
     public void Connect(OctreeNode _oNode)
     {
-        if (_oNode != null && m_bFree && _oNode.m_bFree && _oNode != this && !m_tNeighbors.Contains(_oNode))
+        if (_oNode != null && m_bFree && _oNode.m_bFree && _oNode != this && !m_tNeighbours.Contains(_oNode))
         {
-            m_tNeighbors.Add(_oNode);
-            _oNode.m_tNeighbors.Add(this);
+            m_tNeighbours.Add(_oNode);
+            _oNode.m_tNeighbours.Add(this);
         }
     }
     public OctreeNode GetFreeNodeFromCoordinates(Vector3Int _vLevelCoordinates, int _iDepth)

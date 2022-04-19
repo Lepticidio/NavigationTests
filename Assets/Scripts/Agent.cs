@@ -21,6 +21,7 @@ public class Agent : MonoBehaviour
         {
             m_tCurrentPath = m_oPathfinder.GetPath(transform.position, m_oGoal.position, m_oMap);
             m_bPathCreated = true;
+            MoveToNextPosition();
         }
         if(m_bFollowingMode)
         {
@@ -33,6 +34,10 @@ public class Agent : MonoBehaviour
             if(vToGoal.sqrMagnitude < m_fMinDistance)
             {
                 m_bMoving = false;
+                if(m_bPathCreated)
+                {
+                    MoveToNextPosition();
+                }
             }
         }
     }
@@ -44,16 +49,26 @@ public class Agent : MonoBehaviour
     }
     public void MoveToNextPosition()
     {
-        MoveTo(m_tCurrentPath[m_tCurrentPath.Count - 1]);
-        m_tCurrentPath.RemoveAt(m_tCurrentPath.Count - 1);
+        if(m_tCurrentPath.Count > 1)
+        {
+            MoveTo(m_tCurrentPath[m_tCurrentPath.Count - 1]);
+            m_tCurrentPath.RemoveAt(m_tCurrentPath.Count - 1);
+        }
     }
     void OnDrawGizmos()
     {
-        //for(int i = 0; i < m_tCurrentPath.Count - 1; i++)
-        //{
-        //    Gizmos.color = Color.green;
-        //    Gizmos.DrawLine(m_tCurrentPath[i], m_tCurrentPath[i + 1]);
-        //}
+        for (int i = 0; i < m_tCurrentPath.Count - 1; i++)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(m_tCurrentPath[i], m_tCurrentPath[i + 1]);
+        }
+        if(m_tCurrentPath.Count > 0)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(m_tCurrentPath[m_tCurrentPath.Count - 1], m_vCurrentGoal);
+        }
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, m_vCurrentGoal);
     }
 
 }

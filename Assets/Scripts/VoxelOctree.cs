@@ -42,17 +42,13 @@ public class VoxelOctree : NodeMap
             bool bInVoxelX = _vPosition.x > vNodePosition.x - oNode.m_fHalfSize && _vPosition.x < vNodePosition.x + oNode.m_fHalfSize;
             bool bInVoxelY = _vPosition.y > vNodePosition.y - oNode.m_fHalfSize && _vPosition.y < vNodePosition.y + oNode.m_fHalfSize;
             bool bInVoxelZ = _vPosition.z > vNodePosition.z - oNode.m_fHalfSize && _vPosition.z < vNodePosition.z + oNode.m_fHalfSize;
-
-            Debug.Log("Node " + oNode.m_iDepth + ", " + oNode.m_iLocalIndex + " - X?: " + bInVoxelX + " Y?: " + bInVoxelY + " Z?: " + bInVoxelZ + " - Position " + oNode.m_vPosition + " radius " + oNode.m_fHalfSize + " compared to " + _vPosition);
-            
+         
             if(bInVoxelX && bInVoxelY && bInVoxelZ)
             {
-                Debug.Log("Result found");
                 oResult = oNode;
                 i = m_tFreeNodes.Count;
             }
         }
-        Debug.Log("Result is null?: " + (oResult == null).ToString());
         return oResult;
     }
 }
