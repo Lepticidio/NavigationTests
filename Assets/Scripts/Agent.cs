@@ -69,6 +69,11 @@ public class Agent : MonoBehaviour
     }
     void OnDrawGizmos()
     {
+        for (int i = 0; i < m_oPathfinder.m_tCenters.Count - 1; i++)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(m_oPathfinder.m_tCenters[i], m_oPathfinder.m_tCenters[i + 1]);
+        }
         for (int i = 0; i < m_tCurrentPath.Count - 1; i++)
         {
             Gizmos.color = Color.green;
