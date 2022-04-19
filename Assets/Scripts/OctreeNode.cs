@@ -232,12 +232,41 @@ public class OctreeNode : Node
         }
     }
 
-    public float DistanceToPoint(Vector3 _vPoint)
+    public Vector3 GetClosestPointInNode(Vector3 _vPosition)
     {
-        float fResult = Mathf.Infinity;
+        float fX = _vPosition.x;
 
+        if (fX > m_vPosition.x)
+        {
+            fX = Mathf.Min(fX, m_vPosition.x + m_fHalfSize);
+        }
+        else if (fX < m_vPosition.x)
+        {
+            fX = Mathf.Max(fX, m_vPosition.x - m_fHalfSize);
+        }
 
+        float fY = _vPosition.y;
 
-        return fResult;
+        if (fY > m_vPosition.y)
+        {
+            fY = Mathf.Min(fY, m_vPosition.y + m_fHalfSize);
+        }
+        else if (fY < m_vPosition.y)
+        {
+            fY = Mathf.Max(fY, m_vPosition.y - m_fHalfSize);
+        }
+
+        float fZ = _vPosition.z;
+
+        if (fZ > m_vPosition.z)
+        {
+            fZ = Mathf.Min(fZ, m_vPosition.z + m_fHalfSize);
+        }
+        else if (fZ < m_vPosition.x)
+        {
+            fZ = Mathf.Max(fZ, m_vPosition.z - m_fHalfSize);
+        }
+
+        return new Vector3(fX, fY, fZ);
     }
 }

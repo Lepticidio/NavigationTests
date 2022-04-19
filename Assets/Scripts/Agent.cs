@@ -20,6 +20,7 @@ public class Agent : MonoBehaviour
         if(!m_bPathCreated)
         {
             m_tCurrentPath = m_oPathfinder.GetPath(transform.position, m_oGoal.position, m_oMap);
+            Debug.Log("Path length: " + CalculatePathLength());
             m_bPathCreated = true;
             MoveToNextPosition();
         }
@@ -54,6 +55,17 @@ public class Agent : MonoBehaviour
             MoveTo(m_tCurrentPath[m_tCurrentPath.Count - 1]);
             m_tCurrentPath.RemoveAt(m_tCurrentPath.Count - 1);
         }
+    }
+    public float CalculatePathLength()
+    {
+        float fResult = 0;
+        Vector3 vTempPos = transform.position;
+        for (int i = m_tCurrentPath.Count -1; i >= 0 ; i--)
+        {
+            fResult += (m_tCurrentPath[i] - vTempPos).magnitude;
+            vTempPos = m_tCurrentPath[i];
+        }
+        return fResult;
     }
     void OnDrawGizmos()
     {
