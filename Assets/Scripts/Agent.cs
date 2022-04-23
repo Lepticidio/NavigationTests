@@ -17,12 +17,9 @@ public class Agent : MonoBehaviour
 
     private void Update()
     {
-        if(!m_bPathCreated)
+        if(!m_bPathCreated && m_oMap.m_bGenerated)
         {
-            m_tCurrentPath = m_oPathfinder.GetPath(transform.position, m_oGoal.position, m_oMap);
-            Debug.Log("Path length: " + CalculatePathLength());
-            m_bPathCreated = true;
-            MoveToNextPosition();
+            CreatePath();
         }
         if(m_bFollowingMode)
         {
@@ -41,6 +38,14 @@ public class Agent : MonoBehaviour
                 }
             }
         }
+    }
+    public void CreatePath()
+    {
+        m_tCurrentPath = m_oPathfinder.GetPath(transform.position, m_oGoal.position, m_oMap);
+        Debug.Log("Path length: " + CalculatePathLength());
+        m_bPathCreated = true;
+        MoveToNextPosition();
+
     }
     public void MoveTo(Vector3 _vPosition)
     {

@@ -84,28 +84,31 @@ public class AStar : Pathfinder
             }
         }
 
-        OctreeNode oCurrentOctreeNode = oCurrent.m_oNode as OctreeNode;
-
-        if (oCurrentOctreeNode != null)
+        if(oCurrent != null)
         {
-            Vector3 vPrevious = _vEnd;
+            OctreeNode oCurrentOctreeNode = oCurrent.m_oNode as OctreeNode;
 
-            while (oCurrent.m_oParent != null)
+            if (oCurrentOctreeNode != null)
             {
-                m_tCenters.Add(oCurrent.GetPosition());
-                vPrevious = oCurrentOctreeNode.GetClosestPointInNode(vPrevious);
-                tResult.Add(vPrevious);
-                oCurrent = oCurrent.m_oParent;
-                oCurrentOctreeNode = oCurrent.m_oNode as OctreeNode;
+                Vector3 vPrevious = _vEnd;
+
+                while (oCurrent.m_oParent != null)
+                {
+                    m_tCenters.Add(oCurrent.GetPosition());
+                    vPrevious = oCurrentOctreeNode.GetClosestPointInNode(vPrevious);
+                    tResult.Add(vPrevious);
+                    oCurrent = oCurrent.m_oParent;
+                    oCurrentOctreeNode = oCurrent.m_oNode as OctreeNode;
+                }
             }
-        }
-        else
-        {
-
-            while (oCurrent.m_oParent != null)
+            else
             {
-                tResult.Add(oCurrent.GetPosition());
-                oCurrent = oCurrent.m_oParent;
+
+                while (oCurrent.m_oParent != null)
+                {
+                    tResult.Add(oCurrent.GetPosition());
+                    oCurrent = oCurrent.m_oParent;
+                }
             }
         }
         return tResult;

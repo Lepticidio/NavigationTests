@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17299d74e9a1d7647b712ea128b7a4a1, type: 3}
-  m_Name: ComplexObstacles
+  m_Name: FloatingCubes
   m_EditorClassIdentifier: 
   m_bNoTerrain: 1
   m_bFlatExtremes: 0
   m_bFloatingObstacles: 1
   m_bObstacleSizeVariation: 1
-  m_bUniformObstacles: 0
-  m_bRotatedObstacles: 1
+  m_bUniformObstacles: 1
+  m_bRotatedObstacles: 0
   m_iObstacleAbundance: 50
   m_fMinSize: 0.25
   m_fMaxSize: 16
-  m_tObstacleCounts: 0100000001000000
+  m_tObstacleCounts: 01000000
   m_tObstacles:
-  - {fileID: 2438459561587807868, guid: 1eba383089cb9c440a1dc570240d41d3, type: 3}
-  - {fileID: 7562016990832095360, guid: 9e6f5dcc61215534fbe7325071a62c76, type: 3}
+  - {fileID: 4154947685597400250, guid: 375c979c7492f6540a2d2df28896e884, type: 3}

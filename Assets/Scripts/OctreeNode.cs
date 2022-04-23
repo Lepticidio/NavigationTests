@@ -35,7 +35,7 @@ public class OctreeNode : Node
     public void Subdivide(float _fMinSize, List<Node> _tFreeList)
     {
         bool bFree = !CheckCollision();
-        if (!bFree && m_fHalfSize > _fMinSize)
+        if (!bFree && m_fHalfSize >= _fMinSize)
         {
             m_tSubNodes = new OctreeNode[8];
             float fNewHalfSize = m_fHalfSize * 0.5f;
@@ -135,10 +135,19 @@ public class OctreeNode : Node
     }
     public void Draw(float _fMaxSize)
     {
-        Gizmos.color = Color.Lerp(m_oMinColor, m_oMaxColor, Mathf.Log(m_fHalfSize, 2) / Mathf.Log(_fMaxSize, 2));
+        //Gizmos.color = Color.Lerp(m_oMinColor, m_oMaxColor, Mathf.Log(m_fHalfSize, 2) / Mathf.Log(_fMaxSize, 2));
+        Gizmos.color = Color.black;
         Gizmos.DrawWireCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
+        if (m_bFree)
+        {
+                Gizmos.color = new Color(0f, 0f, 1f, 0.5f);
+        }
+        else if (m_tSubNodes == null || m_tSubNodes.Length == 0 || m_tSubNodes[0] == null)
+        {
+            Gizmos.color = new Color(1f, 0f, 0f, 0.25f);
+            Gizmos.DrawCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
+        }
         //Gizmos.color = m_oRandom;
-        //Gizmos.DrawCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
 
         if (m_tSubNodes != null)
         {
@@ -147,6 +156,8 @@ public class OctreeNode : Node
                 oNode.Draw(_fMaxSize);
             }
         }
+
+        
 
         //Gizmos.color = new Color(Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.x), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.y), Mathf.Lerp(-_fMaxSize, _fMaxSize, m_vPosition.z), 0.125f);
         //for (int i = 0; i < m_tNeighbors.Count; i++)

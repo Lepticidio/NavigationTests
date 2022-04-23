@@ -1329,6 +1329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9797fedb636967d469d33c3045395908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bRandomGoalPosition: 0
   m_iWidth: 2048
   m_iHeight: 2048
   m_iDepth: 1024
@@ -1338,6 +1339,7 @@ MonoBehaviour:
   m_fSeaLevel: 0.5
   m_fSeaDepth: 0.1
   oObstacleParent: {fileID: 1175354595}
+  m_oGoal: {fileID: 2116855139}
   m_oTerr: {fileID: 1345738814}
   m_oCurrentType: {fileID: 11400000, guid: 213d473c047bee341a8b77553b1e2b49, type: 2}
 --- !u!4 &2037424131
@@ -1366,7 +1368,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b9b8aaadea5cf49a024e4187930313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bDebug: 1
+  m_bGenerated: 0
+  m_bDebug: 0
   m_fSize: 16
 --- !u!1 &2116855135
 GameObject:
@@ -1497,7 +1500,7 @@ PrefabInstance:
       objectReference: {fileID: 2116855139}
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_fSpeed
-      value: 1
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_oPathfinder
@@ -1513,15 +1516,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 217802199032357327, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 217802199032357327, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.57
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 217802199032357327, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 217802199032357327, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1602,3 +1605,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b04e5657c322c459e37f9dd79cb91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_tCenters: []

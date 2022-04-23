@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
+    public bool m_bRandomGoalPosition;
     float m_fInverseWidth, m_fInverseHeight, m_fCellSizeFactor = 0.05f;
     public int m_iWidth, m_iHeight, m_iDepth;
     public float[,] m_tAltitudes;
     public float m_fScale, m_fOffsetX, m_fOffsetY, m_fSeaLevel, m_fSeaDepth;
-    public Transform oObstacleParent;
+    public Transform oObstacleParent, m_oGoal;
     public Terrain m_oTerr;
     public MapType m_oCurrentType;
     // Start is called before the first frame update
@@ -20,6 +21,15 @@ public class MapGenerator : MonoBehaviour
             GenerateTerrain(m_oCurrentType);
         }
         GenerateObstacles(m_oCurrentType);
+
+        if(m_bRandomGoalPosition)
+        {
+            int iX = Random.Range(0, m_iWidth + 1);
+            int iZ = Random.Range(0, m_iHeight + 1);
+            float fY = Random.Range(0f, 1f);
+
+            m_oGoal.transform.position = new Vector3((iX - m_iWidth / 2) * m_fCellSizeFactor, fY * m_iDepth * m_fCellSizeFactor - (m_iDepth * m_fCellSizeFactor) / 2, (iZ - m_iHeight / 2) * m_fCellSizeFactor);
+        }
     }
 
     void GenerateTerrain(MapType _oType)
