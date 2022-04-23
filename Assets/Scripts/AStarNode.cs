@@ -6,7 +6,7 @@ public class AStarNode : NodePathfindingInfo
 {
     public float m_fG = Mathf.Infinity, m_fH = Mathf.Infinity, m_fF = Mathf.Infinity;
     public AStarNode m_oParent;
-    public Vector3 m_vPointOfEntry;
+    public Vector3 m_vPointOfEntry, m_vPointOfExit;
     public AStarNode (Node _oNode)
     {
         m_oNode = _oNode;
@@ -18,7 +18,8 @@ public class AStarNode : NodePathfindingInfo
         OctreeNode oOctreeNode = m_oNode as OctreeNode;
         if(oOctreeNode != null)
         {
-            m_fH =(_vGoal -  oOctreeNode.GetClosestPointInNode(_vGoal)).magnitude;
+            m_vPointOfExit = oOctreeNode.GetClosestPointInNode(_vGoal);
+            m_fH =(_vGoal -  m_vPointOfExit).magnitude;
         }
         else
         {
@@ -53,6 +54,6 @@ public class AStarNode : NodePathfindingInfo
     }
     public void CalculateF()
     {
-        m_fF = m_fG + m_fH;
+        m_fF = m_fG + m_fH + (m_vPointOfEntry - m_vPointOfExit).magnitude;
     }
 }

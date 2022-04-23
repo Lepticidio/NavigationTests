@@ -16,6 +16,8 @@ public class OctreeNode : Node
     private Color m_oMaxColor = new Color(0f, 0f, 1.0f, 0.2f);
     private Color m_oRandom;
 
+    private LayerMask m_iLayerMask;
+
     public OctreeNode(Vector3 _vPosition, float _fHalfSize, OctreeNode _oParent = null)
     {
         m_oRandom = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 0.1f);
@@ -31,6 +33,7 @@ public class OctreeNode : Node
         {
             m_oRoot = this;
         }
+        m_iLayerMask = ~(LayerMask.GetMask("Agent") | LayerMask.GetMask("Goal"));
     }
     public void Subdivide(float _fMinSize, List<Node> _tFreeList)
     {
@@ -172,7 +175,7 @@ public class OctreeNode : Node
     }
     public bool CheckCollision()
     {
-        return Physics.OverlapBox(m_vPosition, m_vHalfExtents, Quaternion.identity, ~LayerMask.GetMask("Agent")).Length > 0;
+        return Physics.OverlapBox(m_vPosition, m_vHalfExtents, Quaternion.identity,m_iLayerMask).Length > 0;
     }
     public void Connect(OctreeNode _oNode)
     {
