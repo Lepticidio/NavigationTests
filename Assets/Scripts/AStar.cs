@@ -111,6 +111,7 @@ public class AStar : Pathfinder
                 }
             }
         }
+        tResult.Add(_vStart);
         OptimizePath(ref tResult);
         return tResult;
     }
