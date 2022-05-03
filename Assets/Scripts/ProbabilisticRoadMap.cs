@@ -6,17 +6,35 @@ public class ProbabilisticRoadMap : NodeMap
 {
     public int m_iNumberNodes = 100;
     public float m_fNodeRadius, m_fConnectRadius;
-    public void GenerateMap(Vector3 _vPosition, float _fMapHalfSize)
+    public float m_fMapHalfSize;
+    public override void GenerateMap()
     {
         m_tFreeNodes.Clear();
-        while(m_tFreeNodes.Count < m_iNumberNodes)
+        int iCounter = 0;
+        int iCounterLimit = 10000;
+        while(m_tFreeNodes.Count < m_iNumberNodes|| iCounter > iCounterLimit)
         {
-            PRMNode oNode = new PRMNode(new Vector3(Random.Range(-_fMapHalfSize, _fMapHalfSize), Random.Range(-_fMapHalfSize, _fMapHalfSize), Random.Range(-_fMapHalfSize, _fMapHalfSize)), m_fNodeRadius, m_fConnectRadius);
+            PRMNode oNode = new PRMNode(new Vector3(Random.Range(-m_fMapHalfSize, m_fMapHalfSize), Random.Range(-m_fMapHalfSize, m_fMapHalfSize), Random.Range(-m_fMapHalfSize, m_fMapHalfSize)), m_fNodeRadius, m_fConnectRadius);
             
             if(oNode != null && oNode.m_bFree)
             {
-                m_tFreeNodes.Add(oNode);
                 oNode.ConnectNeighbours(m_tFreeNodes);
+                m_tFreeNodes.Add(oNode);
+            }
+            iCounter++;
+        }
+        Debug.Log("Counter: " + iCounter);
+        m_bGenerated = true;
+    }
+
+    void OnDrawGizmos()
+    {
+        if (m_bDebug)
+        {
+            for (int i = 0; i < m_tFreeNodes.Count; i++)
+            {
+                PRMNode oNode = m_tFreeNodes[i] as PRMNode;
+                oNode.Draw();
             }
         }
     }

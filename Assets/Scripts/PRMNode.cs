@@ -11,6 +11,7 @@ public class PRMNode : Node
     {
         m_vPosition = _vPosition;
         m_fNodeRadius = _fRadius;
+        m_fNeighbourRadius = _fNeighbourRadius;
         m_bFree = !CheckCollision();
         m_iLayerMask = ~(LayerMask.GetMask("Agent") | LayerMask.GetMask("Goal"));
     }
@@ -21,22 +22,39 @@ public class PRMNode : Node
     }
     public void ConnectNeighbours(List<Node> _tNodes)
     {
+        Debug.Log("Try to connect neighbours");
         for(int i = 0; i < _tNodes.Count; i ++)
         {
-            if(!m_tNeighbours.Contains(_tNodes[i]))
+            Debug.Log("Checking node " + i);
+            if (!m_tNeighbours.Contains(_tNodes[i]))
             {
                 Vector3 vDir = _tNodes[i].m_vPosition - m_vPosition;
                 float fDistance = vDir.magnitude;
+                Debug.Log("Distance is " + fDistance);
                 if (fDistance < m_fNeighbourRadius)
                 {
+                    Debug.Log("Less distance");
                     bool bCollision = Physics.Raycast(m_vPosition, vDir, fDistance, m_iLayerMask);
-                    if (bCollision)
+                    if (!bCollision)
                     {
                         m_tNeighbours.Add(_tNodes[i]);
                         _tNodes[i].m_tNeighbours.Add(this);
+                        Debug.Log("Connected Node");
                     }
                 }
             }
         }
+    }
+    public void Draw()
+    {
+        //Gizmos.color = Color.Lerp(m_oMinColor, m_oMaxColor, Mathf.Log(m_fHalfSize, 2) / Mathf.Log(_fMaxSize, 2));
+        Gizmos.color = new Color(1, 0, 1, 0.5f);
+        Gizmos.DrawSphere(m_vPosition, m_fNodeRadius);
+        Gizmos.color = new Color(1, 0, 0, 0.25f);
+        for (int i = 0; i < m_tNeighbours.Count; i++)
+        {
+            Gizmos.DrawLine(m_vPosition, m_tNeighbours[i].m_vPosition);
+        }
+
     }
 }

@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class VoxelOctree : NodeMap
 {
-    public bool m_bDebug;
     OctreeNode m_oRoot;
     public float m_fSize = 2048;
     // Start is called before the first frame update
 
 
-    private void Update()
+    public override void GenerateMap()
     {
-        if(!m_bGenerated)
-        {
-            m_oRoot = new OctreeNode(Vector3.zero, m_fSize * 0.5f);
-            m_oRoot.Subdivide(1, m_tFreeNodes);
-            ConnectNeighbours();
-            m_bGenerated = true;
-        }
+        m_oRoot = new OctreeNode(Vector3.zero, m_fSize * 0.5f);
+        m_oRoot.Subdivide(1, m_tFreeNodes);
+        ConnectNeighbours();
+        m_bGenerated = true;
     }
 
     void OnDrawGizmos()

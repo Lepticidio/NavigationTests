@@ -1085,7 +1085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1702170867
 Transform:
   m_ObjectHideFlags: 0
@@ -1310,6 +1310,7 @@ GameObject:
   - component: {fileID: 2037424131}
   - component: {fileID: 2037424130}
   - component: {fileID: 2037424132}
+  - component: {fileID: 2037424133}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -1329,7 +1330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9797fedb636967d469d33c3045395908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bRandomGoalPosition: 0
+  m_bRandomGoalPosition: 1
   m_iWidth: 2048
   m_iHeight: 2048
   m_iDepth: 1024
@@ -1341,7 +1342,7 @@ MonoBehaviour:
   oObstacleParent: {fileID: 1175354595}
   m_oGoal: {fileID: 2116855139}
   m_oTerr: {fileID: 1345738814}
-  m_oCurrentType: {fileID: 11400000, guid: 213d473c047bee341a8b77553b1e2b49, type: 2}
+  m_oCurrentType: {fileID: 11400000, guid: 6f0a35ca78e5d86418ac7b1b2e31d473, type: 2}
 --- !u!4 &2037424131
 Transform:
   m_ObjectHideFlags: 0
@@ -1370,7 +1371,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bGenerated: 0
   m_bDebug: 1
-  m_fSize: 16
+  m_fSize: 128
+--- !u!114 &2037424133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037424129}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039b4dc7f183dd948b6531d24ed19f2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bGenerated: 0
+  m_bDebug: 1
+  m_iNumberNodes: 500
+  m_fNodeRadius: 2
+  m_fConnectRadius: 16
+  m_fMapHalfSize: 51
 --- !u!1 &2116855135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,7 +1512,7 @@ PrefabInstance:
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_oMap
       value: 
-      objectReference: {fileID: 2037424132}
+      objectReference: {fileID: 2037424133}
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_oGoal
       value: 

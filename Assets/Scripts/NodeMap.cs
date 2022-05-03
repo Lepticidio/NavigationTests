@@ -5,9 +5,18 @@ using UnityEngine;
 public abstract class NodeMap : MonoBehaviour
 {
     public bool m_bGenerated= false;
+    public bool m_bDebug;
 
     public List<Node> m_tFreeNodes = new List<Node>();
 
+    private void Update()
+    {
+        if (!m_bGenerated)
+        {
+            GenerateMap();
+        }
+    }
+    public abstract void GenerateMap();
     public virtual Node GetNodeFromPosition(Vector3 _vPosition)
     {
         Node oResult = null;
