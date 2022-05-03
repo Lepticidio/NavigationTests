@@ -9,6 +9,7 @@ public abstract class Node
     public List<Node> m_tNeighbours = new List<Node>();
     public NodePathfindingInfo m_oPathInfo;
 
+
     public override bool Equals (object obj)
     {
         if((obj == null) || !this.GetType().Equals(obj.GetType()))
@@ -20,4 +21,5 @@ public abstract class Node
             return m_vPosition == ((Node)obj).m_vPosition;
         }
     }
+    public abstract bool CheckCollision();
 }
