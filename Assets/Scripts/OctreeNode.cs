@@ -150,6 +150,11 @@ public class OctreeNode : Node
             Gizmos.color = new Color(1f, 0f, 0f, 0.25f);
             Gizmos.DrawCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
         }
+        //if (m_bCheckedDebug)
+        //{
+        //    Gizmos.color = new Color(1f, 1f, 0f, 0.25f);
+        //    Gizmos.DrawCube(m_vPosition, Vector3.one * m_fHalfSize * 2);
+        //}
         //Gizmos.color = m_oRandom;
 
         if (m_tSubNodes != null)

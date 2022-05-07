@@ -15,7 +15,7 @@ public class ProbabilisticRoadMap : NodeMap
         while(m_tFreeNodes.Count < m_iNumberNodes|| iCounter > iCounterLimit)
         {
             PRMNode oNode = new PRMNode(new Vector3(Random.Range(-m_fMapHalfSize, m_fMapHalfSize), Random.Range(-m_fMapHalfSize, m_fMapHalfSize), Random.Range(-m_fMapHalfSize, m_fMapHalfSize)), m_fNodeRadius, m_fConnectRadius);
-            
+            oNode.m_bFree = !oNode.CheckCollision();
             if(oNode != null && oNode.m_bFree)
             {
                 oNode.ConnectNeighbours(m_tFreeNodes);
@@ -23,7 +23,6 @@ public class ProbabilisticRoadMap : NodeMap
             }
             iCounter++;
         }
-        Debug.Log("Counter: " + iCounter);
         m_bGenerated = true;
     }
 

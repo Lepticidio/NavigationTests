@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Node
 {
     public bool m_bFree = false;
+    public bool m_bCheckedDebug = false;
     public Vector3 m_vPosition;
     public List<Node> m_tNeighbours = new List<Node>();
     public NodePathfindingInfo m_oPathInfo;
@@ -27,7 +28,7 @@ public abstract class Node
     {
         if(!_bResult)
         {
-
+            m_bCheckedDebug = true;
             if (this == _oOtherNode)
             {
                 _bResult = true;

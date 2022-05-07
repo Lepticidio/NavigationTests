@@ -19,13 +19,18 @@ public abstract class NodeMap : MonoBehaviour
     public abstract void GenerateMap();
     public virtual Node GetNodeFromPosition(Vector3 _vPosition)
     {
+        LayerMask iLayerMask = ~(LayerMask.GetMask("Agent") | LayerMask.GetMask("Goal"));
         Node oResult = null;
         float fClosestDistance = Mathf.Infinity;
+
+
         for (int i = 0; i < m_tFreeNodes.Count; i++)
         {
             Node oNode = m_tFreeNodes[i];
-            float fDistance = (oNode.m_vPosition - _vPosition).sqrMagnitude;
-            if (oResult == null || fDistance < fClosestDistance)
+            Vector3 vDir = oNode.m_vPosition - _vPosition;
+            float fDistance = vDir.magnitude;
+            bool bCollision = Physics.Raycast(_vPosition, vDir, fDistance, iLayerMask);
+            if (!bCollision && (oResult == null || fDistance < fClosestDistance))
             {
                 oResult = oNode;
                 fClosestDistance = fDistance;
@@ -35,6 +40,7 @@ public abstract class NodeMap : MonoBehaviour
     }
     public virtual Node GetConnectedNodeFromPosition(Vector3 _vPosition, Node _oOtherNode)
     {
+        LayerMask iLayerMask = ~(LayerMask.GetMask("Agent") | LayerMask.GetMask("Goal"));
         Node oResult = null;
         if(_oOtherNode != null)
         {
@@ -43,13 +49,14 @@ public abstract class NodeMap : MonoBehaviour
             for (int i = 0; i < m_tFreeNodes.Count; i++)
             {
                 Node oNode = m_tFreeNodes[i];
+                Vector3 vDir = oNode.m_vPosition - _vPosition;
                 bool bConnected = false;
                 oNode.CheckIfConnected(_oOtherNode, ref tCheckedNodes, ref bConnected);
-                Debug.Log("checked nodes: " + tCheckedNodes.Count);
                 if (bConnected)
                 {
-                    float fDistance = (oNode.m_vPosition - _vPosition).sqrMagnitude;
-                    if (oResult == null || fDistance < fClosestDistance)
+                    float fDistance = vDir.magnitude;
+                    bool bCollision = Physics.Raycast(_vPosition, vDir, fDistance, iLayerMask);
+                    if (!bCollision && (oResult == null || fDistance < fClosestDistance))
                     {
                         oResult = oNode;
                         fClosestDistance = fDistance;
@@ -59,5 +66,6 @@ public abstract class NodeMap : MonoBehaviour
         }
         return oResult;
     }
+
 }
 

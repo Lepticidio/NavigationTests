@@ -1364,7 +1364,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2037424129}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59b9b8aaadea5cf49a024e4187930313, type: 3}
   m_Name: 
@@ -1379,7 +1379,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2037424129}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 039b4dc7f183dd948b6531d24ed19f2f, type: 3}
   m_Name: 
@@ -1388,7 +1388,7 @@ MonoBehaviour:
   m_bDebug: 1
   m_iNumberNodes: 100
   m_fNodeRadius: 1
-  m_fConnectRadius: 4
+  m_fConnectRadius: 2
   m_fMapHalfSize: 8
 --- !u!1 &2116855135
 GameObject:
@@ -1512,7 +1512,7 @@ PrefabInstance:
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_oMap
       value: 
-      objectReference: {fileID: 2037424132}
+      objectReference: {fileID: 2037424133}
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_oGoal
       value: 

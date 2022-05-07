@@ -53,4 +53,27 @@ public class VoxelOctree : NodeMap
         }
         return oResult;
     }
+    public override Node GetConnectedNodeFromPosition(Vector3 _vPosition, Node _oOtherNode)
+    {
+        OctreeNode oResult = null;
+        if (_oOtherNode != null)
+        {
+            for (int i = 0; i < m_tFreeNodes.Count; i++)
+            {
+                OctreeNode oNode = m_tFreeNodes[i] as OctreeNode;
+                Vector3 vNodePosition = oNode.m_vPosition;
+
+                bool bInVoxelX = _vPosition.x >= vNodePosition.x - oNode.m_fHalfSize && _vPosition.x <= vNodePosition.x + oNode.m_fHalfSize;
+                bool bInVoxelY = _vPosition.y >= vNodePosition.y - oNode.m_fHalfSize && _vPosition.y <= vNodePosition.y + oNode.m_fHalfSize;
+                bool bInVoxelZ = _vPosition.z >= vNodePosition.z - oNode.m_fHalfSize && _vPosition.z <= vNodePosition.z + oNode.m_fHalfSize;
+
+                if (bInVoxelX && bInVoxelY && bInVoxelZ)
+                {
+                    oResult = oNode;
+                    i = m_tFreeNodes.Count;
+                }
+            }
+        }
+        return oResult;
+    }
 }
