@@ -12,9 +12,10 @@ public class AStar : Pathfinder
     public override List<Vector3> GetPath (Vector3 _vStart, Vector3 _vEnd, NodeMap _oMap)
     {
         List<Vector3> tResult = new List<Vector3>();
+        tResult.Add(_vEnd);
 
         Node oStartNode = _oMap.GetNodeFromPosition(_vStart);
-        Node oEndNode = _oMap.GetNodeFromPosition(_vEnd);
+        Node oEndNode = _oMap.GetConnectedNodeFromPosition(_vEnd, oStartNode);
 
 
         AStarNode oStartAStarNode = null;
@@ -106,6 +107,7 @@ public class AStar : Pathfinder
 
                 while (oCurrent.m_oParent != null)
                 {
+                    m_tCenters.Add(oCurrent.GetPosition());
                     tResult.Add(oCurrent.GetPosition());
                     oCurrent = oCurrent.m_oParent;
                 }

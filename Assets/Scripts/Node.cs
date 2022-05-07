@@ -22,4 +22,32 @@ public abstract class Node
         }
     }
     public abstract bool CheckCollision();
+
+    public bool CheckIfConnected(Node _oOtherNode, ref List<Node> _tCheckedNodes, ref bool _bResult)
+    {
+        if(!_bResult)
+        {
+
+            if (this == _oOtherNode)
+            {
+                _bResult = true;
+            }
+            else
+            {
+                _tCheckedNodes.Add(this);
+                for (int i = 0; i < m_tNeighbours.Count; i++)
+                {
+                    if (!_tCheckedNodes.Contains(m_tNeighbours[i]))
+                    {
+                        if (m_tNeighbours[i].CheckIfConnected(_oOtherNode, ref _tCheckedNodes, ref _bResult))
+                        {
+                            _bResult = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return _bResult;
+    }
 }

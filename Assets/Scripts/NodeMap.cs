@@ -33,5 +33,31 @@ public abstract class NodeMap : MonoBehaviour
         }
         return oResult;
     }
+    public virtual Node GetConnectedNodeFromPosition(Vector3 _vPosition, Node _oOtherNode)
+    {
+        Node oResult = null;
+        if(_oOtherNode != null)
+        {
+            float fClosestDistance = Mathf.Infinity;
+            List<Node> tCheckedNodes = new List<Node>();
+            for (int i = 0; i < m_tFreeNodes.Count; i++)
+            {
+                Node oNode = m_tFreeNodes[i];
+                bool bConnected = false;
+                oNode.CheckIfConnected(_oOtherNode, ref tCheckedNodes, ref bConnected);
+                Debug.Log("checked nodes: " + tCheckedNodes.Count);
+                if (bConnected)
+                {
+                    float fDistance = (oNode.m_vPosition - _vPosition).sqrMagnitude;
+                    if (oResult == null || fDistance < fClosestDistance)
+                    {
+                        oResult = oNode;
+                        fClosestDistance = fDistance;
+                    }
+                }
+            }
+        }
+        return oResult;
+    }
 }
 
