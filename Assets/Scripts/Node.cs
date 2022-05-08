@@ -8,8 +8,6 @@ public abstract class Node
     public bool m_bCheckedDebug = false;
     public Vector3 m_vPosition;
     public List<Node> m_tNeighbours = new List<Node>();
-    public NodePathfindingInfo m_oPathInfo;
-
 
     public override bool Equals (object obj)
     {
@@ -22,7 +20,6 @@ public abstract class Node
             return m_vPosition == ((Node)obj).m_vPosition;
         }
     }
-    public abstract bool CheckCollision();
 
     public bool CheckIfConnected(Node _oOtherNode, ref List<Node> _tCheckedNodes, ref bool _bResult)
     {

@@ -6,7 +6,7 @@ public class AStar : Pathfinder
 {
     public List<AStarNode> m_tOpen = new List<AStarNode>();
     public List<AStarNode> m_tClosed = new List<AStarNode>();
-    public Dictionary<Node, AStarNode> m_tAll = new Dictionary<Node, AStarNode>();
+
     // Start is called before the first frame update
 
     public override List<Vector3> GetPath (Vector3 _vStart, Vector3 _vEnd, NodeMap _oMap)
@@ -14,26 +14,29 @@ public class AStar : Pathfinder
         List<Vector3> tResult = new List<Vector3>();
         tResult.Add(_vEnd);
 
-        Node oStartNode = _oMap.GetNodeFromPosition(_vStart);
-        Node oEndNode = _oMap.GetConnectedNodeFromPosition(_vEnd, oStartNode);
+
+        AStarMap oMap = new AStarMap(_oMap);
+
+
 
 
         AStarNode oStartAStarNode = null;
         AStarNode oEndAStarNode = null;
 
-        if(oStartNode != null)
+        oStartAStarNode = new AStarNode(_oMap, _vStart);
+        if (oStartAStarNode != null)
         {
-            oStartAStarNode = new AStarNode(oStartNode);
+            oEndAStarNode = new AStarNode(_oMap, oStartAStarNode.m_tNodes[0], _vEnd);
+            oMap.m_tFreeNodes.Add(oStartAStarNode);
+            oMap.m_tFreeNodes.Add(oEndAStarNode);
         }
-        if(oEndNode != null)
-        {
-            oEndAStarNode = new AStarNode(oEndNode);
-        }
+        
 
         bool bEnd = oStartAStarNode == null || oEndAStarNode == null;
 
         if (!bEnd)
         {
+            oMap.AddConnections();
             oStartAStarNode.CalculateH(_vEnd);
             oEndAStarNode.m_fH = 0;
             oStartAStarNode.m_fG = 0;
@@ -41,30 +44,33 @@ public class AStar : Pathfinder
             m_tOpen.Add(oStartAStarNode);
         }
         AStarNode oCurrent = null;
+        Debug.Log("Map with " + oMap.m_tFreeNodes.Count + " nodes");
+        Debug.Log("Start Node: " + oStartAStarNode.m_vPosition);
+        Debug.Log("End Node: " + oEndAStarNode.m_vPosition);
         while (!bEnd)
         {
             oCurrent = GetLowestOpenF();
+            //Debug.Log("Node checked with H " + oCurrent.m_fH + " G " + oCurrent.m_fG +" F " + oCurrent.m_fF);
             m_tOpen.Remove(oCurrent);
             m_tClosed.Add(oCurrent);
             
             if(oCurrent == oEndAStarNode)
             {
+                Debug.Log("REAL END REACHED");
                 bEnd = true;
             }
             else
             {
-                for(int i = 0; i< oCurrent.GetNeighbours().Count; i++)
+                for (int i = 0; i< oCurrent.m_tNeighbours.Count; i++)
                 {
-                    AStarNode oNeighbour = oCurrent.GetNeighbourPathInfo(i) as AStarNode;
-                    if(oNeighbour == null)
-                    {
-                        oNeighbour = new AStarNode(oCurrent.GetNeighbour(i));
-                    }
+                    AStarNode oNeighbour = oCurrent.m_tNeighbours[i];
+                    
+
                     if(oNeighbour.m_fH == Mathf.Infinity)
                     {
                         oNeighbour.CalculateH(_vEnd);
                     }
-                    if(oCurrent.GetFree() && !m_tClosed.Contains(oNeighbour))
+                    if(!m_tClosed.Contains(oNeighbour))
                     {
                         float fPreviousG = oNeighbour.m_fG;
                         oNeighbour.CalculateG(oCurrent);
@@ -81,40 +87,20 @@ public class AStar : Pathfinder
             }
             if(m_tOpen.Count == 0)
             {
+                Debug.Log("NO MORE OPEN");
                 bEnd = true;
             }
         }
 
-        if(oCurrent != null)
+        while(oCurrent != null)
         {
-            OctreeNode oCurrentOctreeNode = oCurrent.m_oNode as OctreeNode;
-
-            if (oCurrentOctreeNode != null)
-            {
-                Vector3 vPrevious = _vEnd;
-
-                while (oCurrent.m_oParent != null)
-                {
-                    m_tCenters.Add(oCurrent.GetPosition());
-                    vPrevious = oCurrentOctreeNode.GetClosestPointInNode(vPrevious);
-                    tResult.Add(vPrevious);
-                    oCurrent = oCurrent.m_oParent;
-                    oCurrentOctreeNode = oCurrent.m_oNode as OctreeNode;
-                }
-            }
-            else
-            {
-
-                while (oCurrent.m_oParent != null)
-                {
-                    m_tCenters.Add(oCurrent.GetPosition());
-                    tResult.Add(oCurrent.GetPosition());
-                    oCurrent = oCurrent.m_oParent;
-                }
-            }
+            Debug.Log("Adding node " + oCurrent.m_vPosition); 
+            m_tCenters.Add(oCurrent.m_vPosition);
+            tResult.Add(oCurrent.m_vPosition);
+            oCurrent = oCurrent.m_oParent;
         }
-        tResult.Add(_vStart);
         OptimizePath(ref tResult);
+        Debug.Log("Path has " + tResult.Count + " positions");
         return tResult;
     }
 

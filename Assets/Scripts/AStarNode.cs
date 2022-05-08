@@ -2,58 +2,100 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AStarNode : NodePathfindingInfo
+public class AStarNode
 {
+    public Vector3 m_vPosition;
     public float m_fG = Mathf.Infinity, m_fH = Mathf.Infinity, m_fF = Mathf.Infinity;
     public AStarNode m_oParent;
-    public Vector3 m_vPointOfEntry, m_vPointOfExit;
-    public AStarNode (Node _oNode)
+    public List<Node> m_tNodes = new List<Node>();
+    public List<AStarNode> m_tNeighbours = new List<AStarNode>();
+    public AStarNode (Node _oNodeA, Node _oNodeB)
     {
-        m_oNode = _oNode;
-        m_oNode.m_oPathInfo = this;
-    }
+        m_tNodes.Add(_oNodeA);
+        m_tNodes.Add(_oNodeB);
 
-    public void CalculateH(Vector3 _vGoal)
-    {
-        OctreeNode oOctreeNode = m_oNode as OctreeNode;
-        if(oOctreeNode != null)
+        OctreeNode oOctreeA = _oNodeA as OctreeNode;
+        if(oOctreeA != null)
         {
-            m_vPointOfExit = oOctreeNode.GetClosestPointInNode(_vGoal);
-            m_fH =(_vGoal -  m_vPointOfExit).magnitude;
+            //Debug.Log("Node A " + _oNodeA.m_vPosition + " OctNode A " + oOctreeA.m_vPosition);
+            OctreeNode oOctreeB = _oNodeB as OctreeNode;
+
+            OctreeNode oSmallerOctree = oOctreeA;
+            OctreeNode oBiggerOctree = oOctreeB;
+            if(oSmallerOctree.m_fHalfSize > oBiggerOctree.m_fHalfSize)
+            {
+                oSmallerOctree = oOctreeB;
+                oBiggerOctree = oOctreeA;
+            }
+            m_vPosition = oSmallerOctree.m_vPosition;
+
+            //Debug.Log("AStarNode initial pos: " + m_vPosition);
+
+            Vector3 m_vDifference = oBiggerOctree.m_vPosition - m_vPosition;
+            float fX = Mathf.Abs(m_vDifference.x);
+            float fY = Mathf.Abs(m_vDifference.y);
+            float fZ = Mathf.Abs(m_vDifference.z);
+            
+            if(fX > fY)
+            {
+                if(fX > fZ)
+                {
+                    m_vPosition = m_vPosition +
+                        new Vector3(oSmallerOctree.m_fHalfSize * Mathf.Sign(m_vDifference.x), 0, 0);
+                }
+                else
+                {
+                    m_vPosition = m_vPosition +
+                        new Vector3(0, 0, oSmallerOctree.m_fHalfSize * Mathf.Sign(m_vDifference.z));
+                }
+            }
+            else
+            {
+                if (fY > fZ)
+                {
+                    m_vPosition = m_vPosition +
+                        new Vector3(0, oSmallerOctree.m_fHalfSize * Mathf.Sign(m_vDifference.y), 0);
+                }
+                else
+                {
+                    m_vPosition = m_vPosition +
+                        new Vector3(0, 0, oSmallerOctree.m_fHalfSize * Mathf.Sign(m_vDifference.z));
+                }
+            }
         }
         else
         {
-            m_fH = (_vGoal - GetPosition()).magnitude;
+            m_vPosition = (_oNodeA.m_vPosition + _oNodeB.m_vPosition) * 0.5f;
         }
+        //Debug.Log("AStarNode end pos: " + m_vPosition);
+    }
+    public AStarNode (NodeMap _oMap, Vector3 _vPosition)
+    {
+        m_vPosition = _vPosition;
+        m_tNodes.Add(_oMap.GetNodeFromPosition(_vPosition));
+    }
+    public AStarNode(NodeMap _oMap, Node _oNode, Vector3 _vPosition)
+    {
+        m_vPosition = _vPosition;
+        m_tNodes.Add(_oMap.GetConnectedNodeFromPosition(_vPosition, _oNode));
+    }
+    public void CalculateH(Vector3 _vGoal)
+    {
+        m_fH = (_vGoal - m_vPosition).magnitude;        
     }
     public void CalculateG(AStarNode _oPrevious)
     {
-        OctreeNode oOctreeNode = m_oNode as OctreeNode;
-        if (oOctreeNode != null)
-        {
-            Vector3 vTempPointOfEntry = oOctreeNode.GetClosestPointInNode(_oPrevious.m_vPointOfEntry);
-            float fCandidateG = _oPrevious.m_fG + (vTempPointOfEntry- _oPrevious.m_vPointOfEntry).magnitude ;
 
-            if (fCandidateG < m_fG)
-            {
-                m_fG = fCandidateG;
-                m_vPointOfEntry = vTempPointOfEntry;
-                CalculateF();
-            }
-        }
-        else
-        {
-            float fCandidateG = _oPrevious.m_fG + (GetPosition() - _oPrevious.GetPosition()).magnitude;
+        float fCandidateG = _oPrevious.m_fG + (m_vPosition - _oPrevious.m_vPosition).magnitude;
 
-            if (fCandidateG < m_fG)
-            {
-                m_fG = fCandidateG;
-                CalculateF();
-            }
-        }
+        if (fCandidateG < m_fG)
+        {
+            m_fG = fCandidateG;
+            CalculateF();
+        }        
     }
     public void CalculateF()
     {
-        m_fF = m_fG + m_fH + (m_vPointOfEntry - m_vPointOfExit).magnitude;
+        m_fF = m_fG + m_fH;
     }
 }

@@ -15,7 +15,7 @@ public class PRMNode : Node
         m_iLayerMask = ~(LayerMask.GetMask("Agent") | LayerMask.GetMask("Goal"));
     }
 
-    public override bool CheckCollision()
+    public bool CheckCollision()
     {
         //return Physics.OverlapBox(m_vPosition, new Vector3(m_fNodeRadius, m_fNodeRadius, m_fNodeRadius), Quaternion.identity, m_iLayerMask).Length > 0;
         return Physics.OverlapSphere(m_vPosition, m_fNodeRadius, m_iLayerMask).Length > 0;

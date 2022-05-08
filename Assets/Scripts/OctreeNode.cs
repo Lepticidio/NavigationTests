@@ -178,7 +178,7 @@ public class OctreeNode : Node
     {
         return m_vPosition;
     }
-    public override bool CheckCollision()
+    public bool CheckCollision()
     {
         return Physics.OverlapBox(m_vPosition, m_vHalfExtents, Quaternion.identity,m_iLayerMask).Length > 0;
     }
