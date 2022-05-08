@@ -45,15 +45,17 @@ public abstract class NodeMap : MonoBehaviour
         if(_oOtherNode != null)
         {
             float fClosestDistance = Mathf.Infinity;
-            List<Node> tCheckedNodes = new List<Node>();
+            
             for (int i = 0; i < m_tFreeNodes.Count; i++)
             {
                 Node oNode = m_tFreeNodes[i];
                 Vector3 vDir = oNode.m_vPosition - _vPosition;
                 bool bConnected = false;
+                List<Node> tCheckedNodes = new List<Node>();
                 oNode.CheckIfConnected(_oOtherNode, ref tCheckedNodes, ref bConnected);
                 if (bConnected)
                 {
+                    oNode.m_bCheckedDebug = true;
                     float fDistance = vDir.magnitude;
                     bool bCollision = Physics.Raycast(_vPosition, vDir, fDistance, iLayerMask);
                     if (!bCollision && (oResult == null || fDistance < fClosestDistance))

@@ -28,9 +28,9 @@ public abstract class Node
     {
         if(!_bResult)
         {
-            m_bCheckedDebug = true;
             if (this == _oOtherNode)
             {
+                m_bCheckedDebug = true;
                 _bResult = true;
             }
             else
@@ -48,6 +48,10 @@ public abstract class Node
                     }
                 }
             }
+        }
+        if(_bResult)
+        {
+            m_bCheckedDebug = true;
         }
         return _bResult;
     }

@@ -1388,7 +1388,7 @@ MonoBehaviour:
   m_bDebug: 1
   m_iNumberNodes: 100
   m_fNodeRadius: 1
-  m_fConnectRadius: 2
+  m_fConnectRadius: 5
   m_fMapHalfSize: 8
 --- !u!1 &2116855135
 GameObject:
