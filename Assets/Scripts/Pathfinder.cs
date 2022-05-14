@@ -18,7 +18,8 @@ public abstract class Pathfinder : MonoBehaviour
                 if (!bRemoveInBetween)
                 {
                     Vector3 vDir = _tPath[j] - _tPath[i];
-                    bool bCollision = Physics.Raycast(_tPath[i], vDir, vDir.magnitude, iLayerMask);
+                    RaycastHit oInfo;
+                    bool bCollision = Physics.SphereCast(_tPath[i], 0.5f, vDir, out oInfo, vDir.magnitude, iLayerMask);
 
                     if (!bCollision)
                     {

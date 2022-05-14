@@ -29,7 +29,8 @@ public abstract class NodeMap : MonoBehaviour
             Node oNode = m_tFreeNodes[i];
             Vector3 vDir = oNode.m_vPosition - _vPosition;
             float fDistance = vDir.magnitude;
-            bool bCollision = Physics.Raycast(_vPosition, vDir, fDistance, iLayerMask);
+            RaycastHit oInfo;
+            bool bCollision = Physics.SphereCast(_vPosition, 0.5f, vDir, out oInfo, fDistance, iLayerMask);
             if (!bCollision && (oResult == null || fDistance < fClosestDistance))
             {
                 oResult = oNode;
@@ -57,7 +58,8 @@ public abstract class NodeMap : MonoBehaviour
                 {
                     oNode.m_bCheckedDebug = true;
                     float fDistance = vDir.magnitude;
-                    bool bCollision = Physics.Raycast(_vPosition, vDir, fDistance, iLayerMask);
+                    RaycastHit oInfo;
+                    bool bCollision = Physics.SphereCast(_vPosition, 0.5f, vDir, out oInfo, fDistance, iLayerMask);
                     if (!bCollision && (oResult == null || fDistance < fClosestDistance))
                     {
                         oResult = oNode;
