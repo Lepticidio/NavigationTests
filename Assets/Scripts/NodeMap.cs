@@ -8,6 +8,7 @@ public abstract class NodeMap : MonoBehaviour
     public bool m_bDebug;
 
     public List<Node> m_tFreeNodes = new List<Node>();
+    public MapGenerator m_oMapGen;
 
     private void Update()
     {
@@ -70,6 +71,17 @@ public abstract class NodeMap : MonoBehaviour
         }
         return oResult;
     }
+    public void ClearUnderTerrainNodes()
+    {
+        int iTerrainMask = LayerMask.GetMask("Terrain");
+        for (int i = m_tFreeNodes.Count -1; i >= 0; i --)
+        {
+            if(!Misc.CheckOverTerrain(m_tFreeNodes[i].m_vPosition))
+            {
+                m_tFreeNodes.RemoveAt(i);
+            }
 
+        }
+    }
 }
 

@@ -18,7 +18,7 @@ MonoBehaviour:
   m_bObstacleSizeVariation: 1
   m_bUniformObstacles: 0
   m_bRotatedObstacles: 1
-  m_iObstacleAbundance: 10
+  m_iObstacleAbundance: 15
   m_fMinSize: 0.25
   m_fMaxSize: 32
   m_tObstacleCounts: 01000000

@@ -18,11 +18,15 @@ public class ProbabilisticRoadMap : NodeMap
             oNode.m_bFree = !oNode.CheckCollision();
             if(oNode != null && oNode.m_bFree)
             {
-                oNode.ConnectNeighbours(m_tFreeNodes);
                 m_tFreeNodes.Add(oNode);
             }
             iCounter++;
         }
+        if(!m_oMapGen.m_oCurrentType.m_bNoTerrain)
+        {
+            ClearUnderTerrainNodes();
+        }
+        ConnectNeighbours();
         m_bGenerated = true;
     }
 
@@ -34,6 +38,29 @@ public class ProbabilisticRoadMap : NodeMap
             {
                 PRMNode oNode = m_tFreeNodes[i] as PRMNode;
                 oNode.Draw();
+            }
+        }
+    }
+    public void ConnectNeighbours()
+    {
+        LayerMask iLayerMask = ~(LayerMask.GetMask("Agent") | LayerMask.GetMask("Goal"));
+        for (int i = 0; i < m_tFreeNodes.Count; i++)
+        {
+            for (int j = i + 1; j < m_tFreeNodes.Count; j++)
+            {
+                Vector3 vDir = m_tFreeNodes[i].m_vPosition - m_tFreeNodes[j].m_vPosition;
+                float fDistance = vDir.magnitude;
+                if (fDistance < m_fConnectRadius)
+                {
+                    RaycastHit oInfo;
+                    bool bCollision = Physics.SphereCast(m_tFreeNodes[j].m_vPosition, 0.5f, vDir, out oInfo, fDistance, iLayerMask);
+                    if (!bCollision)
+                    {
+                        m_tFreeNodes[i].m_tNeighbours.Add(m_tFreeNodes[j]);
+                        m_tFreeNodes[j].m_tNeighbours.Add(m_tFreeNodes[i]);
+                    }
+                }
+
             }
         }
     }

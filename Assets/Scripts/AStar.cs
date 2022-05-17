@@ -44,13 +44,9 @@ public class AStar : Pathfinder
             m_tOpen.Add(oStartAStarNode);
         }
         AStarNode oCurrent = null;
-        Debug.Log("Map with " + oMap.m_tFreeNodes.Count + " nodes");
-        Debug.Log("Start Node: " + oStartAStarNode.m_vPosition);
-        Debug.Log("End Node: " + oEndAStarNode.m_vPosition);
         while (!bEnd)
         {
             oCurrent = GetLowestOpenF();
-            //Debug.Log("Node checked with H " + oCurrent.m_fH + " G " + oCurrent.m_fG +" F " + oCurrent.m_fF);
             m_tOpen.Remove(oCurrent);
             m_tClosed.Add(oCurrent);
             

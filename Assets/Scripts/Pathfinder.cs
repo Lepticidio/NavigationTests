@@ -12,9 +12,11 @@ public abstract class Pathfinder : MonoBehaviour
         LayerMask iLayerMask = ~(LayerMask.GetMask("Agent") | LayerMask.GetMask("Goal"));
         for (int i = 0; i < _tPath.Count; i++)
         {
+            Debug.Log("tPath i " + i.ToString() + " at " + _tPath[i]);
             bool bRemoveInBetween = false;
             for (int j = _tPath.Count - 1; j > i; j--)
             {
+                Debug.Log("tPath j " + j.ToString() + " at " + _tPath[j]);
                 if (!bRemoveInBetween)
                 {
                     Vector3 vDir = _tPath[j] - _tPath[i];
@@ -23,11 +25,13 @@ public abstract class Pathfinder : MonoBehaviour
 
                     if (!bCollision)
                     {
+                        Debug.Log("No collsion between i at" + _tPath[i] + " and j at " + _tPath[j] + " going to remove");
                         bRemoveInBetween = true;
                     }
                 }
                 else
                 {
+                    Debug.Log("Removing " + j.ToString() + " at " + _tPath[j]);
                     _tPath.RemoveAt(j);
                 }
             }

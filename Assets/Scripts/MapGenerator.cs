@@ -112,7 +112,6 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-
     float CalculateAltitude(int _iX, int _iY)
     {
 

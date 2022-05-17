@@ -13,6 +13,7 @@ public class VoxelOctree : NodeMap
     {
         m_oRoot = new OctreeNode(Vector3.zero, m_fSize * 0.5f);
         m_oRoot.Subdivide(1, m_tFreeNodes);
+        ClearUnderTerrainNodes();
         ConnectNeighbours();
         m_bGenerated = true;
     }

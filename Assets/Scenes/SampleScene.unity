@@ -1005,7 +1005,7 @@ GameObject:
   - component: {fileID: 1345738815}
   - component: {fileID: 1345738814}
   - component: {fileID: 1345738813}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1364,13 +1364,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2037424129}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59b9b8aaadea5cf49a024e4187930313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_bGenerated: 0
   m_bDebug: 1
+  m_oMapGen: {fileID: 2037424130}
   m_fSize: 64
 --- !u!114 &2037424133
 MonoBehaviour:
@@ -1379,14 +1380,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2037424129}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 039b4dc7f183dd948b6531d24ed19f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_bGenerated: 0
   m_bDebug: 1
-  m_iNumberNodes: 1500
+  m_oMapGen: {fileID: 2037424130}
+  m_iNumberNodes: 750
   m_fNodeRadius: 1
   m_fConnectRadius: 16
   m_fMapHalfSize: 64
@@ -1403,6 +1405,7 @@ GameObject:
   - component: {fileID: 2116855137}
   - component: {fileID: 2116855136}
   - component: {fileID: 2116855140}
+  - component: {fileID: 2116855141}
   m_Layer: 7
   m_Name: Goal
   m_TagString: Untagged
@@ -1502,6 +1505,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2116855141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116855135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b04fd820880ef4f86891f52ce60b12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bRandomPosition: 1
+  m_bDependentOnSize: 1
+  m_bPossitive: 0
+  m_vOffset: {x: 0, y: 0, z: 0}
+  m_fRandomMargin: 0
+  m_fObstacleFreeRadius: 2
+  m_oMapGen: {fileID: 2037424130}
 --- !u!1001 &2740412930994974036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1512,7 +1534,7 @@ PrefabInstance:
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_oMap
       value: 
-      objectReference: {fileID: 2037424132}
+      objectReference: {fileID: 2037424133}
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_oGoal
       value: 
@@ -1522,12 +1544,32 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
+      propertyPath: m_oMapGen
+      value: 
+      objectReference: {fileID: 2037424130}
+    - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
+      propertyPath: m_bPossitive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_oPathfinder
       value: 
       objectReference: {fileID: 2740412930994974038}
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_bFollowingMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
+      propertyPath: m_bRandomPosition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
+      propertyPath: m_bDependentOnSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
+      propertyPath: m_fObstacleFreeRadius
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 217802199032357327, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_RootOrder

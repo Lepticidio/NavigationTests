@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Agent : MonoBehaviour
+public class Agent : PathEntity
 {
     public bool m_bFollowingMode, m_bPathCreated;
     bool m_bMoving;
@@ -19,6 +19,7 @@ public class Agent : MonoBehaviour
     {
         if(!m_bPathCreated && m_oMap.m_bGenerated)
         {
+            RandomPosition();
             CreatePath();
         }
         if(m_bFollowingMode)
