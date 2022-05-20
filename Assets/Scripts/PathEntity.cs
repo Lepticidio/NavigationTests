@@ -8,9 +8,8 @@ public class PathEntity : MonoBehaviour
     public bool m_bDependentOnSize, m_bPossitive;
     public Vector3 m_vOffset;
     public float m_fRandomMargin, m_fObstacleFreeRadius;
-    public MapGenerator m_oMapGen;
 
-    public void RandomPosition()
+    public void RandomPosition(MapType _oMapType, NodeMap _oNodeMap)
     {
         if(m_bRandomPosition)
         {
@@ -18,13 +17,14 @@ public class PathEntity : MonoBehaviour
             bool bValidPosition = false;
             if (m_bDependentOnSize)
             {
-                m_vOffset = new Vector3(m_oMapGen.m_oNodeMap.m_fMapHalfSize, 0, 0);
+                m_vOffset = new Vector3(_oNodeMap.m_fMapHalfSize, 0, 0);
             }
             if (!m_bPossitive)
             {
                 m_vOffset = -m_vOffset;
             }
-            while (!bValidPosition)
+            int iCounter = 0;
+            while (!bValidPosition && iCounter < 1000)
             {
 
                 float fX = Random.Range(-m_fRandomMargin, m_fRandomMargin);
@@ -36,11 +36,12 @@ public class PathEntity : MonoBehaviour
                 bValidPosition = !Physics.CheckSphere(transform.position, m_fObstacleFreeRadius, iLayerMask);
 
 
-                if (bValidPosition && !m_oMapGen.m_oCurrentType.m_bNoTerrain)
+                if (bValidPosition && !_oMapType.m_bNoTerrain)
                 {
                     bValidPosition = Misc.CheckOverTerrain(transform.position);
 
                 }
+                iCounter++;
             }
         }
 

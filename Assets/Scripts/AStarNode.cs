@@ -12,12 +12,20 @@ public class AStarNode
 
     public AStarNode(Node _oNode)
     {
+        if(_oNode == null)
+        {
+            Debug.Log("AStarNode from NULL node");
+        }
         m_vPosition = _oNode.m_vPosition;
         m_tNodes.Add(_oNode);
     }
 
     public AStarNode (Node _oNodeA, Node _oNodeB)
     {
+        if (_oNodeA == null || _oNodeB == null)
+        {
+            Debug.Log("AStarNode from NULL nodes");
+        }
         m_tNodes.Add(_oNodeA);
         m_tNodes.Add(_oNodeB);
 

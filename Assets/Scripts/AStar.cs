@@ -45,7 +45,8 @@ public class AStar : Pathfinder
             m_tOpen.Add(oStartAStarNode);
         }
         AStarNode oCurrent = null;
-        while (!bEnd)
+        int iCounter = 0;
+        while (!bEnd && iCounter < 1000)
         {
             oCurrent = GetLowestOpenF();
             m_tOpen.Remove(oCurrent);
@@ -85,13 +86,15 @@ public class AStar : Pathfinder
             {
                 bEnd = true;
             }
+            iCounter++;
         }
-
-        while(oCurrent != null)
+        iCounter = 0;
+        while(oCurrent != null && iCounter < 1000)
         {
             m_tCenters.Add(oCurrent.m_vPosition);
             tResult.Add(oCurrent.m_vPosition);
             oCurrent = oCurrent.m_oParent;
+            iCounter++;
         }
         OptimizePath(ref tResult);
         return tResult;

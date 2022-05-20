@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "PRM")]
 public class ProbabilisticRoadMap : NodeMap
 {
     public int m_iNumberNodes = 100;
     public float m_fNodeRadius, m_fConnectRadius;
-    public override void GenerateMap()
+    public override IEnumerator GenerateMap(MapType _oMapType)
     {
+        Debug.Log("Genereting PRM map");
+        m_bGenerated = false;
+        yield return new WaitForSeconds(0.1f);
         m_tFreeNodes.Clear();
         int iCounter = 0;
         int iCounterLimit = 10000;
-        while(m_tFreeNodes.Count < m_iNumberNodes|| iCounter > iCounterLimit)
+        while(m_tFreeNodes.Count < m_iNumberNodes && iCounter < iCounterLimit)
         {
             PRMNode oNode = new PRMNode(new Vector3(Random.Range(-m_fMapHalfSize, m_fMapHalfSize), Random.Range(-m_fMapHalfSize, m_fMapHalfSize), Random.Range(-m_fMapHalfSize, m_fMapHalfSize)), m_fNodeRadius, m_fConnectRadius);
             oNode.m_bFree = !oNode.CheckCollision();
@@ -20,8 +24,10 @@ public class ProbabilisticRoadMap : NodeMap
                 m_tFreeNodes.Add(oNode);
             }
             iCounter++;
+            Debug.Log("Generating node " + iCounter);
+            yield return new WaitForSeconds(0.1F);
         }
-        if(!m_oMapGen.m_oCurrentType.m_bNoTerrain)
+        if(!_oMapType.m_bNoTerrain)
         {
             ClearUnderTerrainNodes();
         }

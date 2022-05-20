@@ -2,23 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "VoxelOctree")]
 public class VoxelOctree : NodeMap
 {
     OctreeNode m_oRoot;
     // Start is called before the first frame update
 
 
-    public override void GenerateMap()
+    public override IEnumerator GenerateMap(MapType _oMapType)
     {
+        Debug.Log("Genereting octree map");
+        m_bGenerated = false;
+        yield return new WaitForSeconds(0.1f);
+        m_tFreeNodes.Clear();
         m_oRoot = new OctreeNode(Vector3.zero, m_fMapHalfSize );
         m_oRoot.Subdivide(1, m_tFreeNodes);
-        if (!m_oMapGen.m_oCurrentType.m_bNoTerrain)
+        if (!_oMapType.m_bNoTerrain)
         {
             ClearUnderTerrainNodes();
         }
         ConnectNeighbours();
-        m_bGenerated = true;
         Debug.Log("Map generated with " + m_tFreeNodes.Count + " nodes");
+        m_bGenerated = true;
     }
 
     void OnDrawGizmos()

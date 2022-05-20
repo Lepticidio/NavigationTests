@@ -11,18 +11,16 @@ public class MapGenerator : MonoBehaviour
     public float m_fScale, m_fOffsetX, m_fOffsetY, m_fSeaLevel, m_fSeaDepth;
     public Transform oObstacleParent;
     public Terrain m_oTerr;
-    public MapType m_oCurrentType;
-    public NodeMap m_oNodeMap;
 
     // Start is called before the first frame update
-    void Initialize()
+    public void GenerateMap(MapType _oType)
     {
-        m_oTerr.gameObject.SetActive(!m_oCurrentType.m_bNoTerrain);
-        if(!m_oCurrentType.m_bNoTerrain)
+        m_oTerr.gameObject.SetActive(!_oType.m_bNoTerrain);
+        if(!_oType.m_bNoTerrain)
         {
-            GenerateTerrain(m_oCurrentType);
+            GenerateTerrain(_oType);
         }
-        GenerateObstacles(m_oCurrentType);
+        GenerateObstacles(_oType);
     }
 
     void GenerateTerrain(MapType _oType)

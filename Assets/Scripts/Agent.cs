@@ -14,13 +14,21 @@ public class Agent : PathEntity
     public List<Vector3> m_tCurrentPath;
     // Start is called before the first frame update
 
+    public IEnumerator StartPath(MapType _oMapType, NodeMap _oNodeMap)
+    {
+        m_bPathCreated = false;
+        m_bMoving = false;
+        RandomPosition(_oMapType, _oNodeMap);
+
+        Debug.Log("Agent positioned");
+        yield return new WaitForSeconds(0.1f);
+        CreatePath(_oNodeMap);
+        m_bPathCreated = true;
+
+    }
+
     private void Update()
     {
-        if(!m_bPathCreated && m_oMapGen.m_oNodeMap.m_bGenerated)
-        {
-            RandomPosition();
-            CreatePath();
-        }
         if(m_bFollowingMode)
         {
             MoveTo(m_oGoal.position);
@@ -39,12 +47,11 @@ public class Agent : PathEntity
             }
         }
     }
-    public void CreatePath()
+    public float CreatePath(NodeMap _oNodeMap)
     {
-        m_tCurrentPath = m_oPathfinder.GetPath(transform.position, m_oGoal.position, m_oMapGen.m_oNodeMap);
-        Debug.Log("Path length: " + CalculatePathLength());
-        m_bPathCreated = true;
+        m_tCurrentPath = m_oPathfinder.GetPath(transform.position, m_oGoal.position, _oNodeMap);
         MoveToNextPosition();
+        return CalculatePathLength();
 
     }
     public void MoveTo(Vector3 _vPosition)
