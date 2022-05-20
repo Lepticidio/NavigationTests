@@ -9,6 +9,13 @@ public class AStarNode
     public AStarNode m_oParent;
     public List<Node> m_tNodes = new List<Node>();
     public List<AStarNode> m_tNeighbours = new List<AStarNode>();
+
+    public AStarNode(Node _oNode)
+    {
+        m_vPosition = _oNode.m_vPosition;
+        m_tNodes.Add(_oNode);
+    }
+
     public AStarNode (Node _oNodeA, Node _oNodeB)
     {
         m_tNodes.Add(_oNodeA);
@@ -17,7 +24,6 @@ public class AStarNode
         OctreeNode oOctreeA = _oNodeA as OctreeNode;
         if(oOctreeA != null)
         {
-            //Debug.Log("Node A " + _oNodeA.m_vPosition + " OctNode A " + oOctreeA.m_vPosition);
             OctreeNode oOctreeB = _oNodeB as OctreeNode;
 
             OctreeNode oSmallerOctree = oOctreeA;
@@ -28,8 +34,6 @@ public class AStarNode
                 oBiggerOctree = oOctreeA;
             }
             m_vPosition = oSmallerOctree.m_vPosition;
-
-            //Debug.Log("AStarNode initial pos: " + m_vPosition);
 
             Vector3 m_vDifference = oBiggerOctree.m_vPosition - m_vPosition;
             float fX = Mathf.Abs(m_vDifference.x);
@@ -67,7 +71,6 @@ public class AStarNode
         {
             m_vPosition = (_oNodeA.m_vPosition + _oNodeB.m_vPosition) * 0.5f;
         }
-        //Debug.Log("AStarNode end pos: " + m_vPosition);
     }
     public AStarNode (NodeMap _oMap, Vector3 _vPosition)
     {

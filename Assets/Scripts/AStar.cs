@@ -11,14 +11,15 @@ public class AStar : Pathfinder
 
     public override List<Vector3> GetPath (Vector3 _vStart, Vector3 _vEnd, NodeMap _oMap)
     {
+        m_tCenters.Clear();
+        m_tClosed.Clear();
+        m_tOpen.Clear();
+
         List<Vector3> tResult = new List<Vector3>();
         tResult.Add(_vEnd);
 
 
         AStarMap oMap = new AStarMap(_oMap);
-
-
-
 
         AStarNode oStartAStarNode = null;
         AStarNode oEndAStarNode = null;
@@ -36,7 +37,7 @@ public class AStar : Pathfinder
 
         if (!bEnd)
         {
-            oMap.AddConnections();
+            oMap.AddConnections();            
             oStartAStarNode.CalculateH(_vEnd);
             oEndAStarNode.m_fH = 0;
             oStartAStarNode.m_fG = 0;
@@ -52,7 +53,6 @@ public class AStar : Pathfinder
             
             if(oCurrent == oEndAStarNode)
             {
-                Debug.Log("REAL END REACHED");
                 bEnd = true;
             }
             else
@@ -83,20 +83,17 @@ public class AStar : Pathfinder
             }
             if(m_tOpen.Count == 0)
             {
-                Debug.Log("NO MORE OPEN");
                 bEnd = true;
             }
         }
 
         while(oCurrent != null)
         {
-            Debug.Log("Adding node " + oCurrent.m_vPosition); 
             m_tCenters.Add(oCurrent.m_vPosition);
             tResult.Add(oCurrent.m_vPosition);
             oCurrent = oCurrent.m_oParent;
         }
         OptimizePath(ref tResult);
-        Debug.Log("Path has " + tResult.Count + " positions");
         return tResult;
     }
 

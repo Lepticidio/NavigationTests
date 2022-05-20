@@ -6,7 +6,6 @@ public class ProbabilisticRoadMap : NodeMap
 {
     public int m_iNumberNodes = 100;
     public float m_fNodeRadius, m_fConnectRadius;
-    public float m_fMapHalfSize;
     public override void GenerateMap()
     {
         m_tFreeNodes.Clear();

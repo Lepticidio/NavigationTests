@@ -18,7 +18,7 @@ public class PathEntity : MonoBehaviour
             bool bValidPosition = false;
             if (m_bDependentOnSize)
             {
-                m_vOffset = new Vector3(m_oMapGen.m_oCurrentType.m_fMaxSize, 0, 0);
+                m_vOffset = new Vector3(m_oMapGen.m_oNodeMap.m_fMapHalfSize, 0, 0);
             }
             if (!m_bPossitive)
             {

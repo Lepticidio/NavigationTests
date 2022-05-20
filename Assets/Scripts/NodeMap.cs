@@ -4,8 +4,9 @@ using UnityEngine;
 
 public abstract class NodeMap : MonoBehaviour
 {
-    public bool m_bGenerated= false;
+    public bool m_bGenerated= false, m_bPathfindingInEdges;
     public bool m_bDebug;
+    public float m_fMapHalfSize;
 
     public List<Node> m_tFreeNodes = new List<Node>();
     public MapGenerator m_oMapGen;

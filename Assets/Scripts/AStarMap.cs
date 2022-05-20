@@ -16,19 +16,27 @@ public class AStarMap
     public void GenerateMap()
     {
         List<Node> tCheckedNodes = new List<Node>();
+
         foreach (Node oNode in m_oBaseMap.m_tFreeNodes)
         {
-            foreach(Node oNeighbour in oNode.m_tNeighbours)
+            if (m_oBaseMap.m_bPathfindingInEdges)
             {
-                if(!tCheckedNodes.Contains(oNeighbour))
+                foreach (Node oNeighbour in oNode.m_tNeighbours)
                 {
-                    AStarNode oAStarNode = new AStarNode(oNode, oNeighbour);
-                    //Debug.Log("After creation pos " + oAStarNode.m_vPosition);
-                    m_tFreeNodes.Add(oAStarNode);
+                    if (!tCheckedNodes.Contains(oNeighbour))
+                    {
+                        AStarNode oAStarNode = new AStarNode(oNode, oNeighbour);
+                        m_tFreeNodes.Add(oAStarNode);
+                    }
                 }
             }
-            tCheckedNodes.Add(oNode);
-        }
+            else
+            {
+                AStarNode oAStarNode = new AStarNode(oNode);
+                m_tFreeNodes.Add(oAStarNode);
+            }
+        }      
+        
     }
 
     public void AddConnections()
@@ -45,7 +53,11 @@ public class AStarMap
                 {
                     foreach (Node oBaseNodeB in oNodeB.m_tNodes)
                     {
-                        if(oBaseNodeA == oBaseNodeB)
+                        if(m_oBaseMap.m_bPathfindingInEdges && oBaseNodeA == oBaseNodeB)
+                        {
+                            bCommonBaseNode = true;
+                        }
+                        else if(!m_oBaseMap.m_bPathfindingInEdges && oBaseNodeA.m_tNeighbours.Contains(oBaseNodeB))
                         {
                             bCommonBaseNode = true;
                         }

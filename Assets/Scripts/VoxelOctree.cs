@@ -5,24 +5,27 @@ using UnityEngine;
 public class VoxelOctree : NodeMap
 {
     OctreeNode m_oRoot;
-    public float m_fSize = 2048;
     // Start is called before the first frame update
 
 
     public override void GenerateMap()
     {
-        m_oRoot = new OctreeNode(Vector3.zero, m_fSize * 0.5f);
+        m_oRoot = new OctreeNode(Vector3.zero, m_fMapHalfSize );
         m_oRoot.Subdivide(1, m_tFreeNodes);
-        ClearUnderTerrainNodes();
+        if (!m_oMapGen.m_oCurrentType.m_bNoTerrain)
+        {
+            ClearUnderTerrainNodes();
+        }
         ConnectNeighbours();
         m_bGenerated = true;
+        Debug.Log("Map generated with " + m_tFreeNodes.Count + " nodes");
     }
 
     void OnDrawGizmos()
     {
         if(m_oRoot != null && m_bDebug)
         {
-            m_oRoot.Draw(m_fSize*0.5f);
+            m_oRoot.Draw(m_fMapHalfSize);
         }
     }
 

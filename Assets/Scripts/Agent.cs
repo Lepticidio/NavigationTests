@@ -11,13 +11,12 @@ public class Agent : PathEntity
     Vector3 m_vCurrentGoal;
     public Transform m_oGoal;
     public Pathfinder m_oPathfinder;
-    public NodeMap m_oMap;
     public List<Vector3> m_tCurrentPath;
     // Start is called before the first frame update
 
     private void Update()
     {
-        if(!m_bPathCreated && m_oMap.m_bGenerated)
+        if(!m_bPathCreated && m_oMapGen.m_oNodeMap.m_bGenerated)
         {
             RandomPosition();
             CreatePath();
@@ -42,7 +41,7 @@ public class Agent : PathEntity
     }
     public void CreatePath()
     {
-        m_tCurrentPath = m_oPathfinder.GetPath(transform.position, m_oGoal.position, m_oMap);
+        m_tCurrentPath = m_oPathfinder.GetPath(transform.position, m_oGoal.position, m_oMapGen.m_oNodeMap);
         Debug.Log("Path length: " + CalculatePathLength());
         m_bPathCreated = true;
         MoveToNextPosition();
