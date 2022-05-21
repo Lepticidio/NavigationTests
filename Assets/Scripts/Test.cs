@@ -29,7 +29,7 @@ public class Test : ScriptableObject
                     yield return new WaitForSeconds(0.05f);
                 }
                 Debug.Log("Finished generating map");
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(1f);
                 _oGoal.RandomPosition(m_oMapType, m_oNodeMap);
                 Debug.Log("Finished goal random Position");
                 yield return new WaitForSeconds(0.1f);

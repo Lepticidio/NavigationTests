@@ -109,4 +109,18 @@ public class AStarNode
     {
         m_fF = m_fG + m_fH;
     }
+    public void ReviewConnections(AStarMap _oMap)
+    {
+        for (int i = 0; i < _oMap.m_tFreeNodes.Count; i++)
+        {
+            for(int j = 0; j< m_tNodes.Count; j++)
+            {
+                if (_oMap.m_tFreeNodes[i].m_tNodes.Contains(m_tNodes[j]))
+                {
+                    m_tNeighbours.Add(_oMap.m_tFreeNodes[i]);
+                    _oMap.m_tFreeNodes[i].m_tNeighbours.Add(this);
+                }
+            }
+        }
+    }
 }

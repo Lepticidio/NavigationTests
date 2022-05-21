@@ -22,7 +22,7 @@ public class Agent : PathEntity
 
         Debug.Log("Agent positioned");
         yield return new WaitForSeconds(0.1f);
-        CreatePath(_oNodeMap);
+        yield return StartCoroutine( CreatePath(_oNodeMap));
         m_bPathCreated = true;
 
     }
@@ -47,11 +47,17 @@ public class Agent : PathEntity
             }
         }
     }
-    public float CreatePath(NodeMap _oNodeMap)
+    public IEnumerator CreatePath(NodeMap _oNodeMap)
     {
-        m_tCurrentPath = m_oPathfinder.GetPath(transform.position, m_oGoal.position, _oNodeMap);
+        m_oPathfinder.StartCoroutine(m_oPathfinder.GetPath(transform.position, m_oGoal.position, _oNodeMap));
+        while (!m_oPathfinder.m_bPathFound)
+        {
+            Debug.Log("Getting Path");
+            yield return new WaitForSeconds(0.05f);
+        }
+        m_tCurrentPath = m_oPathfinder.m_tPath;
         MoveToNextPosition();
-        return CalculatePathLength();
+        CalculatePathLength();
 
     }
     public void MoveTo(Vector3 _vPosition)

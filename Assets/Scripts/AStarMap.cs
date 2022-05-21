@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class AStarMap
 {
+    public bool m_bGenerated = false, m_bConnected = false;
     NodeMap m_oBaseMap;
     public List<AStarNode> m_tFreeNodes = new List<AStarNode>();
 
     public AStarMap(NodeMap _oMap)
     {
         m_oBaseMap = _oMap;
-        GenerateMap();
     }
 
-    public void GenerateMap()
+    public IEnumerator GenerateMap()
     {
+        m_bGenerated = false;
         Debug.Log("Generating map from map with " + m_oBaseMap.m_tFreeNodes.Count + " nodes");
+        yield return new WaitForSeconds(0.05f);
         List<Node> tCheckedNodes = new List<Node>();
         int icount = 0;
         foreach (Node oNode in m_oBaseMap.m_tFreeNodes)
@@ -28,7 +30,8 @@ public class AStarMap
                     if (!tCheckedNodes.Contains(oNeighbour))
                     {
                         AStarNode oAStarNode = new AStarNode(oNode, oNeighbour);
-                        Debug.Log("AStarNode " + icount + " has " + oAStarNode.m_tNodes.Count + " base nodes");
+                        oAStarNode.m_tNodes.Add(oNode);
+                        oAStarNode.m_tNodes.Add(oNeighbour);
                         m_tFreeNodes.Add(oAStarNode);
                     }
                 }
@@ -38,31 +41,32 @@ public class AStarMap
                 Debug.Log("base map is not edge - based");
                 AStarNode oAStarNode = new AStarNode(oNode);
                 Debug.Log("AStarNode " + icount + " has " + oAStarNode.m_tNodes.Count + " base nodes");
+                oAStarNode.m_tNodes.Add(oNode);
+                yield return new WaitForSeconds(0.05f);
                 m_tFreeNodes.Add(oAStarNode);
             }
             icount++;
-        }      
+        }
+        m_bGenerated = true;
         
     }
 
-    public void AddConnections()
+    public IEnumerator AddConnections()
     {
-        Debug.Log("Adding connections");
+        m_bConnected = false;
+        Debug.Log("Adding connections in map with " + m_tFreeNodes.Count +" nodes");
+        yield return new WaitForSeconds(3f);
         for (int i = 0; i < m_tFreeNodes.Count; i++)
         {
             for(int j = i + 1; j < m_tFreeNodes.Count; j++)
             {
                 bool bCommonBaseNode = false;
-                Debug.Log("Conn: AStarNode " + i + " has " + m_tFreeNodes[i].m_tNodes.Count + " base nodes");
                 foreach (Node oBaseNodeA in m_tFreeNodes[i].m_tNodes)
                 {
-                    if(oBaseNodeA == null)
+                    if(i%2 == 0 && j%100000 == 0)
                     {
-                        Debug.Log("BaseNode A is NULL");
-                    }
-                    else
-                    {
-                        Debug.Log("BaseNode A NOT null, has " + oBaseNodeA.m_tNeighbours.Count + " neighbours");
+                        Debug.Log("Checking connection between node " + i + " and " + j);
+                        yield return new WaitForSeconds(0.01f);
                     }
                     foreach (Node oBaseNodeB in m_tFreeNodes[j].m_tNodes)
                     {
@@ -84,5 +88,6 @@ public class AStarMap
                 }
             }
         }
+        m_bConnected = true;
     }
 }

@@ -9,17 +9,28 @@ public class AStar : Pathfinder
 
     // Start is called before the first frame update
 
-    public override List<Vector3> GetPath (Vector3 _vStart, Vector3 _vEnd, NodeMap _oMap)
+    public override IEnumerator GetPath(Vector3 _vStart, Vector3 _vEnd, NodeMap _oMap)
     {
+        Debug.Log("Started getting path");
+        yield return new WaitForSeconds(0.1f);
+        m_bPathFound = false;
         m_tCenters.Clear();
         m_tClosed.Clear();
         m_tOpen.Clear();
 
-        List<Vector3> tResult = new List<Vector3>();
-        tResult.Add(_vEnd);
+        m_tPath = new List<Vector3>();
+        m_tPath.Add(_vEnd);
 
 
         AStarMap oMap = new AStarMap(_oMap);
+        StartCoroutine(oMap.GenerateMap());
+        while (!oMap.m_bGenerated )
+        {
+            Debug.Log("AStarMap in process");
+            yield return new WaitForSeconds(0.05f);
+        }
+        Debug.Log("AStarMap finished");
+        yield return new WaitForSeconds(1f);
 
         AStarNode oStartAStarNode = null;
         AStarNode oEndAStarNode = null;
@@ -37,7 +48,11 @@ public class AStar : Pathfinder
 
         if (!bEnd)
         {
-            oMap.AddConnections();            
+            oStartAStarNode.ReviewConnections(oMap);
+            oEndAStarNode.ReviewConnections(oMap);
+            Debug.Log("Connections finished");
+            yield return new WaitForSeconds(0.05f);
+
             oStartAStarNode.CalculateH(_vEnd);
             oEndAStarNode.m_fH = 0;
             oStartAStarNode.m_fG = 0;
@@ -46,7 +61,9 @@ public class AStar : Pathfinder
         }
         AStarNode oCurrent = null;
         int iCounter = 0;
-        while (!bEnd && iCounter < 1000)
+        Debug.Log("about to start while");
+        yield return new WaitForSeconds(0.1f);
+        while (!bEnd && iCounter < 100000)
         {
             oCurrent = GetLowestOpenF();
             m_tOpen.Remove(oCurrent);
@@ -86,18 +103,22 @@ public class AStar : Pathfinder
             {
                 bEnd = true;
             }
+            Debug.Log("Counter " + iCounter);
+            yield return new WaitForSeconds(0.05f);
             iCounter++;
         }
+        Debug.Log("Lists ready");
+        yield return new WaitForSeconds(0.05f);
         iCounter = 0;
-        while(oCurrent != null && iCounter < 1000)
+        while(oCurrent != null && iCounter < 100000)
         {
             m_tCenters.Add(oCurrent.m_vPosition);
-            tResult.Add(oCurrent.m_vPosition);
+            m_tPath.Add(oCurrent.m_vPosition);
             oCurrent = oCurrent.m_oParent;
             iCounter++;
         }
-        OptimizePath(ref tResult);
-        return tResult;
+        OptimizePath(ref m_tPath);
+        m_bPathFound = true;
     }
 
 
