@@ -20,25 +20,10 @@ public class Test : ScriptableObject
             for (int  j = 0; j < m_iRepetitionsPerMap; j++)
             {
                 Debug.Log("Map " + i + " iteration " + j +" Algorithm: " + m_oNodeMap.name );
-                yield return new WaitForSeconds(1);
                 //yield return _oMapGen.StartCoroutine(m_oNodeMap.GenerateMap(m_oMapType));
-                _oMapGen.StartCoroutine( m_oNodeMap.GenerateMap(m_oMapType));
-                while (!m_oNodeMap.m_bGenerated)
-                {
-                    Debug.Log("waiting for map");
-                    yield return new WaitForSeconds(0.05f);
-                }
-                Debug.Log("Finished generating map");
-                yield return new WaitForSeconds(1f);
+                 m_oNodeMap.GenerateMap(m_oMapType);
                 _oGoal.RandomPosition(m_oMapType, m_oNodeMap);
-                Debug.Log("Finished goal random Position");
-                yield return new WaitForSeconds(0.1f);
-                _oAgent.StartCoroutine(_oAgent.StartPath(m_oMapType, m_oNodeMap));
-                while (!_oAgent.m_bPathCreated)
-                {
-                    Debug.Log("waiting for path");
-                    yield return new WaitForSeconds(0.05f);
-                }
+                _oAgent.StartPath(m_oMapType, m_oNodeMap);
                 //Debug.Log("Map type: " + m_oMapType.name + " Map: " + i + " Iteration: " + j +" Algorithm: " + m_oNodeMap.name+   " Length: " + fResult);
                 Debug.Log("ITERATION ENDS");
 

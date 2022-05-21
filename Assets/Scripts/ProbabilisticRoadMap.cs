@@ -7,11 +7,9 @@ public class ProbabilisticRoadMap : NodeMap
 {
     public int m_iNumberNodes = 100;
     public float m_fNodeRadius, m_fConnectRadius;
-    public override IEnumerator GenerateMap(MapType _oMapType)
+    public override void GenerateMap(MapType _oMapType)
     {
-        Debug.Log("Genereting PRM map");
         m_bGenerated = false;
-        yield return new WaitForSeconds(0.1f);
         m_tFreeNodes.Clear();
         int iCounter = 0;
         int iCounterLimit = 10000;
@@ -24,8 +22,6 @@ public class ProbabilisticRoadMap : NodeMap
                 m_tFreeNodes.Add(oNode);
             }
             iCounter++;
-            Debug.Log("Generating node " + iCounter);
-            yield return new WaitForSeconds(0.1F);
         }
         if(!_oMapType.m_bNoTerrain)
         {

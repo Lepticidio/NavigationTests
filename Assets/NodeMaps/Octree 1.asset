@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Octree 1
   m_EditorClassIdentifier: 
   m_bPathfindingInEdges: 1
+  m_bGenerated: 1
   m_bDebug: 1
   m_fMapHalfSize: 64

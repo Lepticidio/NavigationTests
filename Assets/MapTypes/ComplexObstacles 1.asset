@@ -20,7 +20,7 @@ MonoBehaviour:
   m_bRotatedObstacles: 1
   m_iObstacleAbundance: 15
   m_fMinSize: 0.25
-  m_fMaxSize: 32
+  m_fMaxSize: 24
   m_tObstacleCounts: 01000000
   m_tObstacles:
   - {fileID: 2438459561587807868, guid: 1eba383089cb9c440a1dc570240d41d3, type: 3}
