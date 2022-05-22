@@ -7,7 +7,8 @@ public class AStarMap
     public bool m_bGenerated = false, m_bConnected = false;
     NodeMap m_oBaseMap;
     public List<AStarNode> m_tFreeNodes = new List<AStarNode>();
-    public Dictionary<Node, List<AStarNode>> m_tNodeDictionary = new Dictionary<Node, List<AStarNode>>();
+    public Dictionary<Node, List<AStarNode>> m_tNodeListDictionary = new Dictionary<Node, List<AStarNode>>();
+    public Dictionary<Node, AStarNode> m_tNodeDictionary = new Dictionary<Node, AStarNode>();
 
     public AStarMap(NodeMap _oMap)
     {
@@ -28,31 +29,31 @@ public class AStarMap
                     oAStarNode.m_tNodes.Add(oNode);
                     oAStarNode.m_tNodes.Add(oNeighbour);
 
-                    if(!m_tNodeDictionary.ContainsKey(oNode))
+                    if(!m_tNodeListDictionary.ContainsKey(oNode))
                     {
-                        m_tNodeDictionary[oNode] = new List<AStarNode>();
-                        m_tNodeDictionary[oNode].Add(oAStarNode);
+                        m_tNodeListDictionary[oNode] = new List<AStarNode>();
+                        m_tNodeListDictionary[oNode].Add(oAStarNode);
                     }
                     else
                     {
-                        for(int i = 0; i < m_tNodeDictionary[oNode].Count; i++)
+                        for(int i = 0; i < m_tNodeListDictionary[oNode].Count; i++)
                         {
-                            m_tNodeDictionary[oNode][i].m_tNeighbours.Add(oAStarNode);
-                            oAStarNode.m_tNeighbours.Add(m_tNodeDictionary[oNode][i]);
+                            m_tNodeListDictionary[oNode][i].m_tNeighbours.Add(oAStarNode);
+                            oAStarNode.m_tNeighbours.Add(m_tNodeListDictionary[oNode][i]);
 
                         }
                     }
-                    if (!m_tNodeDictionary.ContainsKey(oNeighbour))
+                    if (!m_tNodeListDictionary.ContainsKey(oNeighbour))
                     {
-                        m_tNodeDictionary[oNeighbour] = new List<AStarNode>();
-                        m_tNodeDictionary[oNeighbour].Add(oAStarNode);
+                        m_tNodeListDictionary[oNeighbour] = new List<AStarNode>();
+                        m_tNodeListDictionary[oNeighbour].Add(oAStarNode);
                     }
                     else
                     {
-                        for (int i = 0; i < m_tNodeDictionary[oNeighbour].Count; i++)
+                        for (int i = 0; i < m_tNodeListDictionary[oNeighbour].Count; i++)
                         {
-                            m_tNodeDictionary[oNeighbour][i].m_tNeighbours.Add(oAStarNode);
-                            oAStarNode.m_tNeighbours.Add(m_tNodeDictionary[oNeighbour][i]);
+                            m_tNodeListDictionary[oNeighbour][i].m_tNeighbours.Add(oAStarNode);
+                            oAStarNode.m_tNeighbours.Add(m_tNodeListDictionary[oNeighbour][i]);
 
                         }
                     }
@@ -63,6 +64,18 @@ public class AStarMap
             {
                 AStarNode oAStarNode = new AStarNode(oNode);
                 oAStarNode.m_tNodes.Add(oNode);
+
+                for (int i = 0; i <  oNode.m_tNeighbours.Count; i++)
+                {
+                    if(m_tNodeDictionary.ContainsKey(oNode.m_tNeighbours[i]))
+                    {
+                        m_tNodeDictionary[oNode.m_tNeighbours[i]].m_tNeighbours.Add(oAStarNode);
+                        oAStarNode.m_tNeighbours.Add(m_tNodeDictionary[oNode.m_tNeighbours[i]]);
+                    }
+                }
+
+                m_tNodeDictionary.Add(oNode, oAStarNode);
+                
                 m_tFreeNodes.Add(oAStarNode);
             }
             if(icount%1000 == 0)

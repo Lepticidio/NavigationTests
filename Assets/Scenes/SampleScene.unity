@@ -1369,7 +1369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bDebug: 1
   m_tTestsToRun:
-  - {fileID: 11400000, guid: 7e5f7129a979686438f1f06817d694bd, type: 2}
+  - {fileID: 11400000, guid: 8619d1f6e083a544f929ab54d82788db, type: 2}
   m_oAgent: {fileID: 2740412930994974039}
   m_oGoal: {fileID: 2116855141}
   m_oMapGen: {fileID: 2037424130}
@@ -1650,7 +1650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b04e5657c322c459e37f9dd79cb91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bPathFound: 0
+  m_bPathFound: 1
   m_tCenters: []
   m_tPath: []
 --- !u!114 &2740412930994974039 stripped
