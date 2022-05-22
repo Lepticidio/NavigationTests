@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0127151661749540b6006eb13f8fe28, type: 3}
+  m_Name: Void Octree
+  m_EditorClassIdentifier: 
+  m_iSize: 8
+  m_iMapNumber: 1
+  m_iRepetitionsPerMap: 1
+  m_oMapType: {fileID: 11400000, guid: 213d473c047bee341a8b77553b1e2b49, type: 2}
+  m_tResults:
+  - 0
+  m_oNodeMap: {fileID: 11400000, guid: 6211afda995547a4e8ac09a063cb8c34, type: 2}

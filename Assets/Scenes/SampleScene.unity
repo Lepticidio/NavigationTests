@@ -1330,6 +1330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bRandomGoalPosition: 1
+  m_bMapGenerated: 0
   m_iWidth: 2048
   m_iHeight: 2048
   m_iDepth: 1024
@@ -1366,6 +1367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b9dc13d3fadb24c9ddee49430d41d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bDebug: 1
   m_tTestsToRun:
   - {fileID: 11400000, guid: 7e5f7129a979686438f1f06817d694bd, type: 2}
   m_oAgent: {fileID: 2740412930994974039}

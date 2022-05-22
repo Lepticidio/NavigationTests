@@ -17,13 +17,22 @@ public class Test : ScriptableObject
         {
             _oMapGen.GenerateMap(m_oMapType);
             Debug.Log("Map " + i + " generated" + " Algorithm: " + m_oNodeMap.name);
+            yield return new WaitForSeconds(0.05f);
             for (int  j = 0; j < m_iRepetitionsPerMap; j++)
             {
                 Debug.Log("Map " + i + " iteration " + j +" Algorithm: " + m_oNodeMap.name );
                 //yield return _oMapGen.StartCoroutine(m_oNodeMap.GenerateMap(m_oMapType));
                  m_oNodeMap.GenerateMap(m_oMapType);
+                yield return new WaitForSeconds(0.05f);
+
+                //yield return new WaitForSeconds(10);
                 _oGoal.RandomPosition(m_oMapType, m_oNodeMap);
                 _oAgent.StartPath(m_oMapType, m_oNodeMap);
+                while (!_oAgent.m_oPathfinder.m_bPathFound)
+                {
+                    Debug.Log("waiting for path");
+                    yield return null;
+                }
                 //Debug.Log("Map type: " + m_oMapType.name + " Map: " + i + " Iteration: " + j +" Algorithm: " + m_oNodeMap.name+   " Length: " + fResult);
                 Debug.Log("ITERATION ENDS");
 

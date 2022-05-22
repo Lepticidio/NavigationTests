@@ -30,18 +30,6 @@ public class ProbabilisticRoadMap : NodeMap
         ConnectNeighbours();
         m_bGenerated = true;
     }
-
-    void OnDrawGizmos()
-    {
-        if (m_bDebug)
-        {
-            for (int i = 0; i < m_tFreeNodes.Count; i++)
-            {
-                PRMNode oNode = m_tFreeNodes[i] as PRMNode;
-                oNode.Draw();
-            }
-        }
-    }
     public void ConnectNeighbours()
     {
         LayerMask iLayerMask = ~(LayerMask.GetMask("Agent") | LayerMask.GetMask("Goal"));

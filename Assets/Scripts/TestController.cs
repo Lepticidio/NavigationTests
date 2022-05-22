@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TestController : MonoBehaviour
 {
+    public bool m_bDebug;
     public List<Test> m_tTestsToRun = new List<Test>();
     public Agent m_oAgent;
     public Goal m_oGoal;
@@ -21,26 +22,28 @@ public class TestController : MonoBehaviour
     }
     void OnDrawGizmos()
     {
-        if(m_oLastTest != null)
+        if(m_bDebug)
         {
-            if (m_oLastTest.m_oNodeMap.m_bPathfindingInEdges)
+            if (m_oLastTest != null)
             {
-                VoxelOctree oOctree = m_oLastTest.m_oNodeMap as VoxelOctree;
-                if (oOctree != null && oOctree.m_oRoot != null && oOctree.m_bDebug)
+                if (m_oLastTest.m_oNodeMap.m_bPathfindingInEdges)
                 {
-                    oOctree.m_oRoot.Draw(oOctree.m_fMapHalfSize);
+                    VoxelOctree oOctree = m_oLastTest.m_oNodeMap as VoxelOctree;
+                    if (oOctree != null && oOctree.m_oRoot != null)
+                    {
+                        oOctree.m_oRoot.Draw(oOctree.m_fMapHalfSize);
+                    }
                 }
-            }
-            else
-            {
-                ProbabilisticRoadMap oPRM = m_oLastTest.m_oNodeMap as ProbabilisticRoadMap;
-                if (oPRM.m_bDebug)
+                else
                 {
+                    ProbabilisticRoadMap oPRM = m_oLastTest.m_oNodeMap as ProbabilisticRoadMap;
+
                     for (int i = 0; i < oPRM.m_tFreeNodes.Count; i++)
                     {
                         PRMNode oNode = oPRM.m_tFreeNodes[i] as PRMNode;
                         oNode.Draw();
                     }
+                    
                 }
             }
         }

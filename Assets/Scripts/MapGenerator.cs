@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    public bool m_bRandomGoalPosition;
+    public bool m_bRandomGoalPosition, m_bMapGenerated;
     float m_fInverseWidth, m_fInverseHeight, m_fCellSizeFactor = 0.05f;
     public int m_iWidth, m_iHeight, m_iDepth;
     public float[,] m_tAltitudes;
@@ -15,18 +15,18 @@ public class MapGenerator : MonoBehaviour
     // Start is called before the first frame update
     public void GenerateMap(MapType _oType)
     {
+        m_bMapGenerated = false;
         m_oTerr.gameObject.SetActive(!_oType.m_bNoTerrain);
         if(!_oType.m_bNoTerrain)
         {
             GenerateTerrain(_oType);
         }
         GenerateObstacles(_oType);
+        m_bMapGenerated = true;
     }
 
     void GenerateTerrain(MapType _oType)
     {
-
-
         m_oTerr.terrainData.size = new Vector3(m_iWidth * m_fCellSizeFactor, m_iDepth * m_fCellSizeFactor, m_iHeight * m_fCellSizeFactor);
         m_oTerr.gameObject.transform.position = new Vector3(-m_oTerr.terrainData.size.x * 0.5f, -m_oTerr.terrainData.size.y * m_fSeaLevel, -m_oTerr.terrainData.size.z * 0.5f);
 

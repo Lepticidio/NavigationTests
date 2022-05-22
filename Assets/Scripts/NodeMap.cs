@@ -6,7 +6,6 @@ public abstract class NodeMap : ScriptableObject
 {
     public bool m_bPathfindingInEdges;
     public bool m_bGenerated = false;
-    public bool m_bDebug;
     public float m_fMapHalfSize;
 
     public List<Node> m_tFreeNodes = new List<Node>();

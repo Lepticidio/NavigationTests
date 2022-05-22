@@ -7,16 +7,16 @@ public class AStarMap
     public bool m_bGenerated = false, m_bConnected = false;
     NodeMap m_oBaseMap;
     public List<AStarNode> m_tFreeNodes = new List<AStarNode>();
+    public Dictionary<Node, List<AStarNode>> m_tNodeDictionary = new Dictionary<Node, List<AStarNode>>();
 
     public AStarMap(NodeMap _oMap)
     {
         m_oBaseMap = _oMap;
     }
 
-    public void GenerateMap()
+    public IEnumerator GenerateMap()
     {
         m_bGenerated = false;
-        List<Node> tCheckedNodes = new List<Node>();
         int icount = 0;
         foreach (Node oNode in m_oBaseMap.m_tFreeNodes)
         {
@@ -24,13 +24,39 @@ public class AStarMap
             {
                 foreach (Node oNeighbour in oNode.m_tNeighbours)
                 {
-                    if (!tCheckedNodes.Contains(oNeighbour))
+                    AStarNode oAStarNode = new AStarNode(oNode, oNeighbour);
+                    oAStarNode.m_tNodes.Add(oNode);
+                    oAStarNode.m_tNodes.Add(oNeighbour);
+
+                    if(!m_tNodeDictionary.ContainsKey(oNode))
                     {
-                        AStarNode oAStarNode = new AStarNode(oNode, oNeighbour);
-                        oAStarNode.m_tNodes.Add(oNode);
-                        oAStarNode.m_tNodes.Add(oNeighbour);
-                        m_tFreeNodes.Add(oAStarNode);
+                        m_tNodeDictionary[oNode] = new List<AStarNode>();
+                        m_tNodeDictionary[oNode].Add(oAStarNode);
                     }
+                    else
+                    {
+                        for(int i = 0; i < m_tNodeDictionary[oNode].Count; i++)
+                        {
+                            m_tNodeDictionary[oNode][i].m_tNeighbours.Add(oAStarNode);
+                            oAStarNode.m_tNeighbours.Add(m_tNodeDictionary[oNode][i]);
+
+                        }
+                    }
+                    if (!m_tNodeDictionary.ContainsKey(oNeighbour))
+                    {
+                        m_tNodeDictionary[oNeighbour] = new List<AStarNode>();
+                        m_tNodeDictionary[oNeighbour].Add(oAStarNode);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < m_tNodeDictionary[oNeighbour].Count; i++)
+                        {
+                            m_tNodeDictionary[oNeighbour][i].m_tNeighbours.Add(oAStarNode);
+                            oAStarNode.m_tNeighbours.Add(m_tNodeDictionary[oNeighbour][i]);
+
+                        }
+                    }
+                    m_tFreeNodes.Add(oAStarNode);
                 }
             }
             else
@@ -39,10 +65,14 @@ public class AStarMap
                 oAStarNode.m_tNodes.Add(oNode);
                 m_tFreeNodes.Add(oAStarNode);
             }
+            if(icount%1000 == 0)
+            {
+                Debug.Log("Creating node " + icount);
+                yield return new WaitForSeconds(0.01f);
+            }
             icount++;
         }
-        m_bGenerated = true;
-        
+        m_bGenerated = true;        
     }
 
     //public IEnumerator AddConnections()
@@ -74,7 +104,6 @@ public class AStarMap
     //                    }
     //                }
     //            }
-
     //            if(bCommonBaseNode)
     //            {
     //                m_tFreeNodes[i].m_tNeighbours.Add(m_tFreeNodes[j]);

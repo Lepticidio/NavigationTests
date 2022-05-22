@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59b9b8aaadea5cf49a024e4187930313, type: 3}
-  m_Name: Octree 1
+  m_Name: Small Octree
   m_EditorClassIdentifier: 
   m_bPathfindingInEdges: 1
   m_bGenerated: 1
-  m_fMapHalfSize: 64
+  m_bDebug: 1
+  m_fMapHalfSize: 8

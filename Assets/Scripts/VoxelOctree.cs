@@ -23,14 +23,6 @@ public class VoxelOctree : NodeMap
         m_bGenerated = true;
     }
 
-    void OnDrawGizmos()
-    {
-        if(m_oRoot != null && m_bDebug)
-        {
-            m_oRoot.Draw(m_fMapHalfSize);
-        }
-    }
-
     void ConnectNeighbours()
     {
         for(int i = 0; i < m_tFreeNodes.Count; i++)
@@ -62,8 +54,9 @@ public class VoxelOctree : NodeMap
 
             bool bInVoxelZ = _vPosition.z >= vNodePosition.z - oNode.m_fHalfSize && _vPosition.z <= vNodePosition.z + oNode.m_fHalfSize;
 
+            Debug.Log("Obtained node pos " + oNode.m_vPosition + " size " + oNode.m_fHalfSize);
 
-            Debug.Log(" x: " + bInVoxelX + " y: " + bInVoxelY + " z: " + bInVoxelZ);
+            //Debug.Log(" x: " + bInVoxelX + " y: " + bInVoxelY + " z: " + bInVoxelZ);
             if(bInVoxelX && bInVoxelY && bInVoxelZ)
             {
                 oResult = oNode;
