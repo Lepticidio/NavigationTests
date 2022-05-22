@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PRM Complex Obstacles
   m_EditorClassIdentifier: 
   m_iSize: 0
-  m_iMapNumber: 2
-  m_iRepetitionsPerMap: 4
+  m_iMapNumber: 1
+  m_iRepetitionsPerMap: 1
   m_oMapType: {fileID: 11400000, guid: 6f0a35ca78e5d86418ac7b1b2e31d473, type: 2}
   m_tResults: []
   m_oNodeMap: {fileID: 11400000, guid: 347d15ade64ac1a408b9b5cb081e93b8, type: 2}

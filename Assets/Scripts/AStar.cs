@@ -9,36 +9,18 @@ public class AStar : Pathfinder
 
     // Start is called before the first frame update
 
-    public override IEnumerator GetPath(Vector3 _vStart, Vector3 _vEnd, NodeMap _oMap)
+    public override void GetPath(Vector3 _vStart, Vector3 _vEnd, NodeMap _oMap)
     {
-        Debug.Log("start getting path");
-        yield return new WaitForSeconds(1f);
-
         m_bPathFound = false;
         m_tCenters.Clear();
         m_tClosed.Clear();
         m_tOpen.Clear();
 
-        Debug.Log("lists cleared");
-        yield return new WaitForSeconds(0.05f);
-
         m_tPath = new List<Vector3>();
         m_tPath.Add(_vEnd);
 
-        Debug.Log("before creating map");
-        yield return new WaitForSeconds(0.05f);
-
         AStarMap oMap = new AStarMap(_oMap);
-        Debug.Log("before generating map");
-        yield return new WaitForSeconds(0.05f);
-        StartCoroutine(  oMap.GenerateMap());
-        while(!oMap.m_bGenerated)
-        {
-            Debug.Log("waiting for AStarMap");
-            yield return null;
-        }
-        Debug.Log("after generating map");
-        yield return new WaitForSeconds(0.05f);
+        oMap.GenerateMap();
 
         AStarNode oStartAStarNode = null;
         AStarNode oEndAStarNode = null;
@@ -56,8 +38,6 @@ public class AStar : Pathfinder
 
         bool bEnd = oStartAStarNode == null || oEndAStarNode == null;
 
-        Debug.Log("bEnd? " + bEnd);
-        yield return new WaitForSeconds(0.05f);
         if (!bEnd)
         {
             oStartAStarNode.CalculateH(_vEnd);
@@ -68,19 +48,12 @@ public class AStar : Pathfinder
         }
         AStarNode oCurrent = null;
         int iCounter = 0;
-        Debug.Log("Start node " + oStartAStarNode.m_vPosition + " end node " + oEndAStarNode.m_vPosition);
-        yield return new WaitForSeconds(0.05f);
 
         while (!bEnd && iCounter < 1000000)
         {
             oCurrent = GetLowestOpenF();
             m_tOpen.Remove(oCurrent);
             m_tClosed.Add(oCurrent);
-            if(iCounter %1000 == 0)
-            {
-                Debug.Log(iCounter + " Current node: " + oCurrent.m_vPosition + " open " + m_tOpen.Count + " closed " + m_tClosed.Count + " neighbours " + oCurrent.m_tNeighbours.Count);
-                yield return new WaitForSeconds(0.05f);
-            }
             if(oCurrent == oEndAStarNode)
             {
                 bEnd = true;
@@ -119,15 +92,12 @@ public class AStar : Pathfinder
         iCounter = 0;
         while(oCurrent != null && iCounter < 100000)
         {
-            Debug.Log("Path node: " + oCurrent.m_vPosition);
             m_tCenters.Add(oCurrent.m_vPosition);
             m_tPath.Add(oCurrent.m_vPosition);
             oCurrent = oCurrent.m_oParent;
             iCounter++;
         }
-        Debug.Log("original path has " + m_tPath.Count + " nodes");
         OptimizePath(ref m_tPath);
-        Debug.Log("optimized path has " + m_tPath.Count + " nodes");
         m_bPathFound = true;
     }
 

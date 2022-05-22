@@ -75,19 +75,11 @@ public class AStarNode
     public AStarNode (NodeMap _oMap, Vector3 _vPosition)
     {
         m_vPosition = _vPosition;
-        if(_oMap.GetNodeFromPosition(_vPosition) == null)
-        {
-            Debug.Log("Base node of " + _vPosition + " is null");
-        }
         m_tNodes.Add(_oMap.GetNodeFromPosition(_vPosition));
     }
     public AStarNode(NodeMap _oMap, Node _oNode, Vector3 _vPosition)
     {
         m_vPosition = _vPosition;
-        if (_oMap.GetConnectedNodeFromPosition(_vPosition, _oNode) == null)
-        {
-            Debug.Log("Connected base node of " + _vPosition + " is null");
-        }
         m_tNodes.Add(_oMap.GetConnectedNodeFromPosition(_vPosition, _oNode));
     }
     public void CalculateH(Vector3 _vGoal)
@@ -111,7 +103,6 @@ public class AStarNode
     }
     public void ReviewConnections(AStarMap _oMap)
     {
-        Debug.Log("Initial neighbours: " +m_tNeighbours.Count);
         for (int i = 0; i < _oMap.m_tFreeNodes.Count; i++)
         {
             for(int j = 0; j< m_tNodes.Count; j++)
@@ -120,11 +111,8 @@ public class AStarNode
                 {
                     m_tNeighbours.Add(_oMap.m_tFreeNodes[i]);
                     _oMap.m_tFreeNodes[i].m_tNeighbours.Add(this);
-                    Debug.Log("Node " + m_vPosition + " is neighbour of " + _oMap.m_tFreeNodes[i].m_vPosition);
-                   // Debug.Log("Node " + m_vPosition + " is neighbour of " + _oMap.m_tFreeNodes[i].m_vPosition + " because they have in common" + m_tNodes[j].m_vPosition);
                 }
             }
         }
-        Debug.Log(m_tNeighbours.Count + " nodes added");
     }
 }

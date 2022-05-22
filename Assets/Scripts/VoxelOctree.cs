@@ -33,8 +33,6 @@ public class VoxelOctree : NodeMap
     }
     public override Node GetNodeFromPosition(Vector3 _vPosition)
     {
-
-        Debug.Log("Getting a node out of " + m_tFreeNodes.Count);
         OctreeNode oResult = null;
         //OctreeNode oClosest = null;
         //float fDistance = Mathf.Infinity;
@@ -49,12 +47,9 @@ public class VoxelOctree : NodeMap
             //float fZ = 0;
 
             bool bInVoxelX = _vPosition.x >= vNodePosition.x - oNode.m_fHalfSize && _vPosition.x <= vNodePosition.x + oNode.m_fHalfSize;
-
             bool bInVoxelY = _vPosition.y >= vNodePosition.y - oNode.m_fHalfSize && _vPosition.y <= vNodePosition.y + oNode.m_fHalfSize;
-
             bool bInVoxelZ = _vPosition.z >= vNodePosition.z - oNode.m_fHalfSize && _vPosition.z <= vNodePosition.z + oNode.m_fHalfSize;
 
-            Debug.Log("Obtained node pos " + oNode.m_vPosition + " size " + oNode.m_fHalfSize);
 
             //Debug.Log(" x: " + bInVoxelX + " y: " + bInVoxelY + " z: " + bInVoxelZ);
             if(bInVoxelX && bInVoxelY && bInVoxelZ)

@@ -18,8 +18,6 @@ public abstract class NodeMap : ScriptableObject
         Node oResult = null;
         float fClosestDistance = Mathf.Infinity;
 
-        Debug.Log("Getting a node out of " + m_tFreeNodes.Count);
-
         for (int i = 0; i < m_tFreeNodes.Count; i++)
         {
             Node oNode = m_tFreeNodes[i];
@@ -27,7 +25,6 @@ public abstract class NodeMap : ScriptableObject
             float fDistance = vDir.magnitude;
             RaycastHit oInfo;
             bool bCollision = Physics.SphereCast(_vPosition, 0.5f, vDir, out oInfo, fDistance, iLayerMask);
-            Debug.Log("Getting node: Node " + m_tFreeNodes[i].m_vPosition + " distance " + fDistance + " closest " + fClosestDistance);
             if (!bCollision && (oResult == null || fDistance < fClosestDistance))
             {
                 oResult = oNode;
@@ -76,7 +73,6 @@ public abstract class NodeMap : ScriptableObject
             {
                 m_tFreeNodes.RemoveAt(i);
             }
-
         }
     }
 }

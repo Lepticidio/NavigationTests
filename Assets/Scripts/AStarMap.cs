@@ -15,7 +15,7 @@ public class AStarMap
         m_oBaseMap = _oMap;
     }
 
-    public IEnumerator GenerateMap()
+    public void GenerateMap()
     {
         m_bGenerated = false;
         int icount = 0;
@@ -77,11 +77,6 @@ public class AStarMap
                 m_tNodeDictionary.Add(oNode, oAStarNode);
                 
                 m_tFreeNodes.Add(oAStarNode);
-            }
-            if(icount%1000 == 0)
-            {
-                Debug.Log("Creating node " + icount);
-                yield return new WaitForSeconds(0.01f);
             }
             icount++;
         }
