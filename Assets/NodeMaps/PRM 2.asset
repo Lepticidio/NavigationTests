@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PRM 2
   m_EditorClassIdentifier: 
   m_bPathfindingInEdges: 0
-  m_bGenerated: 0
-  m_fMapHalfSize: 64
-  m_iNumberNodes: 1500
+  m_bGenerated: 1
+  m_fMapHalfSize: 8
   m_fNodeRadius: 1
   m_fConnectRadius: 8
+  m_fNodeDensity: 0.00001

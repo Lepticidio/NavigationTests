@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0127151661749540b6006eb13f8fe28, type: 3}
-  m_Name: ComplexObstacles
+  m_Name: SmallComplexObstacles
   m_EditorClassIdentifier: 
   m_iSize: 0
   m_iMapNumber: 2
   m_iRepetitionsPerMap: 2
-  m_oMapType: {fileID: 11400000, guid: fd345781c440b2d46abcc74f39740462, type: 2}
+  m_oMapType: {fileID: 11400000, guid: 6b5466e36fcbbe14291d1576179301cf, type: 2}
   m_tNodeMaps:
   - {fileID: 11400000, guid: 791b2ced0cb3577418f1e1c5059a84f9, type: 2}
   - {fileID: 11400000, guid: d01c430ec312a7842b90d9f781dbcab8, type: 2}

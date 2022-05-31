@@ -28,4 +28,8 @@ public class MapType : ScriptableObject
             _oTransform.rotation = Random.rotation;
         }
     }
+    public int GetTridimensionalSize()
+    {
+        return m_iMapSize * m_iMapSize * m_iMapSize;
+    }
 }

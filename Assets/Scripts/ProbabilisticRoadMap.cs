@@ -5,16 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "PRM")]
 public class ProbabilisticRoadMap : NodeMap
 {
-    public int m_iNumberNodes = 100;
-    public float m_fNodeRadius, m_fConnectRadius;
+    public float m_fNodeRadius, m_fConnectRadius, m_fNodeDensity;
     public override void GenerateMap(MapType _oMapType)
     {
         m_bGenerated = false;
         m_tFreeNodes.Clear();
         CalculateHalfSize(_oMapType);
         int iCounter = 0;
-        int iCounterLimit = 10000;
-        while(m_tFreeNodes.Count < m_iNumberNodes && iCounter < iCounterLimit)
+        int iCounterLimit = 100000;
+        while(m_tFreeNodes.Count < m_fNodeDensity * _oMapType.GetTridimensionalSize() && iCounter < iCounterLimit)
         {
             PRMNode oNode = new PRMNode(new Vector3(Random.Range(-m_fMapHalfSize, m_fMapHalfSize), Random.Range(-m_fMapHalfSize, m_fMapHalfSize), Random.Range(-m_fMapHalfSize, m_fMapHalfSize)), m_fNodeRadius, m_fConnectRadius);
             oNode.m_bFree = !oNode.CheckCollision();

@@ -13,7 +13,6 @@ public class MapGenerator : MonoBehaviour
     public Terrain m_oTerr;
     public List<GameObject> m_tObstacles = new List<GameObject>();
 
-    // Start is called before the first frame update
     public void GenerateMap(MapType _oType)
     {
         m_bMapGenerated = false;
@@ -87,7 +86,7 @@ public class MapGenerator : MonoBehaviour
             Destroy(m_tObstacles[i]);
         }
         m_tObstacles.Clear();
-        int iObstacleAbundance = (int)(_oType.m_fObstacleDensity * (float)_oType.m_iMapSize);
+        int iObstacleAbundance = (int)(_oType.m_fObstacleDensity * _oType.GetTridimensionalSize());
         for (int i = 0; i < _oType.m_tObstacleCounts.Length; i++)
         {
             GameObject oPrefab = _oType.m_tObstacles[i];
