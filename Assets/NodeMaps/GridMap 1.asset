@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0127151661749540b6006eb13f8fe28, type: 3}
-  m_Name: Void PRM
+  m_Script: {fileID: 11500000, guid: 91dcfb796c2d37545875593b1fb525ac, type: 3}
+  m_Name: GridMap 1
   m_EditorClassIdentifier: 
-  m_iSize: 8
-  m_iMapNumber: 1
-  m_iRepetitionsPerMap: 1
-  m_oMapType: {fileID: 11400000, guid: 4886fd8bc8186bc48a3c7f2c1d4d8435, type: 2}
-  m_tNodeMaps: []
-  m_oLastNodeMap: {fileID: 0}
+  m_bPathfindingInEdges: 1
+  m_bGenerated: 0
+  m_fMapHalfSize: 64

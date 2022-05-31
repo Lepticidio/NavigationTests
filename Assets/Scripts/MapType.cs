@@ -6,8 +6,8 @@ using UnityEngine;
 public class MapType : ScriptableObject
 {
     public bool m_bNoTerrain, m_bFlatExtremes, m_bFloatingObstacles, m_bObstacleSizeVariation, m_bUniformObstacles, m_bRotatedObstacles;
-    public int m_iObstacleAbundance;
-    public float m_fMinSize, m_fMaxSize;
+    public int m_iMapSize;
+    public float m_fMinSize, m_fMaxSize, m_fObstacleDensity;
     public int[] m_tObstacleCounts;
     public GameObject[] m_tObstacles;
 

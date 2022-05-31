@@ -15,9 +15,10 @@ MonoBehaviour:
   m_iSize: 0
   m_iMapNumber: 2
   m_iRepetitionsPerMap: 2
-  m_oMapType: {fileID: 11400000, guid: 6f0a35ca78e5d86418ac7b1b2e31d473, type: 2}
-  m_tResults: []
+  m_oMapType: {fileID: 11400000, guid: fd345781c440b2d46abcc74f39740462, type: 2}
   m_tNodeMaps:
+  - {fileID: 11400000, guid: 791b2ced0cb3577418f1e1c5059a84f9, type: 2}
   - {fileID: 11400000, guid: d01c430ec312a7842b90d9f781dbcab8, type: 2}
   - {fileID: 11400000, guid: 347d15ade64ac1a408b9b5cb081e93b8, type: 2}
-  m_oLastNodeMap: {fileID: 11400000, guid: 347d15ade64ac1a408b9b5cb081e93b8, type: 2}
+  - {fileID: 11400000, guid: 02421f5ff5ea373498b8f9347544db54, type: 2}
+  m_oLastNodeMap: {fileID: 11400000, guid: d01c430ec312a7842b90d9f781dbcab8, type: 2}

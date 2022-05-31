@@ -15,7 +15,6 @@ MonoBehaviour:
   m_iSize: 8
   m_iMapNumber: 1
   m_iRepetitionsPerMap: 1
-  m_oMapType: {fileID: 11400000, guid: 213d473c047bee341a8b77553b1e2b49, type: 2}
-  m_tResults:
-  - 0
-  m_oNodeMap: {fileID: 11400000, guid: 6211afda995547a4e8ac09a063cb8c34, type: 2}
+  m_oMapType: {fileID: 11400000, guid: 4886fd8bc8186bc48a3c7f2c1d4d8435, type: 2}
+  m_tNodeMaps: []
+  m_oLastNodeMap: {fileID: 0}

@@ -11,6 +11,7 @@ public class ProbabilisticRoadMap : NodeMap
     {
         m_bGenerated = false;
         m_tFreeNodes.Clear();
+        CalculateHalfSize(_oMapType);
         int iCounter = 0;
         int iCounterLimit = 10000;
         while(m_tFreeNodes.Count < m_iNumberNodes && iCounter < iCounterLimit)

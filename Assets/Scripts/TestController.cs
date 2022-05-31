@@ -50,6 +50,17 @@ public class TestController : MonoBehaviour
                     {
                         oOctree.m_oRoot.Draw(oOctree.m_fMapHalfSize);
                     }
+                    else
+                    {
+                        GridMap oGrid = m_oLastTest.m_oLastNodeMap as GridMap;
+                        if(oGrid != null)
+                        {
+                            for (int i = 0; i < oGrid.m_tNodes.Count; i++)
+                            {
+                                oGrid.m_tNodes[i].Draw(0.5f);
+                            }
+                        }
+                    }
                 }
                 else
                 {

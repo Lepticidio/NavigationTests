@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17299d74e9a1d7647b712ea128b7a4a1, type: 3}
-  m_Name: ComplexObstacles 1
+  m_Name: ComplexObstaclesMedium
   m_EditorClassIdentifier: 
   m_bNoTerrain: 1
   m_bFlatExtremes: 0
@@ -18,9 +18,10 @@ MonoBehaviour:
   m_bObstacleSizeVariation: 1
   m_bUniformObstacles: 0
   m_bRotatedObstacles: 1
-  m_iObstacleAbundance: 15
+  m_iMapSize: 512
   m_fMinSize: 0.25
   m_fMaxSize: 24
+  m_fObstacleDensity: 0.01
   m_tObstacleCounts: 01000000
   m_tObstacles:
   - {fileID: 2438459561587807868, guid: 1eba383089cb9c440a1dc570240d41d3, type: 3}

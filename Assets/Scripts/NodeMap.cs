@@ -7,10 +7,21 @@ public abstract class NodeMap : ScriptableObject
     public bool m_bPathfindingInEdges;
     public bool m_bGenerated = false;
     public float m_fMapHalfSize;
-
     public List<Node> m_tFreeNodes = new List<Node>();
 
    
+    public void CalculateHalfSize(MapType _oMapType)
+    {
+        float fResult = 1;
+        float fTarget = ((float)_oMapType.m_iMapSize * MapGenerator.m_fCellSizeFactor)/2;
+
+        while (fResult < fTarget)
+        {
+            fResult *= 2;
+        }
+        m_fMapHalfSize = fResult;
+    }
+
     public abstract void GenerateMap(MapType _oMapType);
     public virtual Node GetNodeFromPosition(Vector3 _vPosition)
     {

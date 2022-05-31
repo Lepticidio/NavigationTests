@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0127151661749540b6006eb13f8fe28, type: 3}
-  m_Name: Void PRM
+  m_Name: Void GridMap
   m_EditorClassIdentifier: 
   m_iSize: 8
   m_iMapNumber: 1
   m_iRepetitionsPerMap: 1
   m_oMapType: {fileID: 11400000, guid: 4886fd8bc8186bc48a3c7f2c1d4d8435, type: 2}
-  m_tNodeMaps: []
-  m_oLastNodeMap: {fileID: 0}
+  m_tNodeMaps:
+  - {fileID: 11400000, guid: 791b2ced0cb3577418f1e1c5059a84f9, type: 2}
+  m_oLastNodeMap: {fileID: 11400000, guid: 791b2ced0cb3577418f1e1c5059a84f9, type: 2}

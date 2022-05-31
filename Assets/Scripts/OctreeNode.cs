@@ -3,24 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class OctreeNode : Node
+public class OctreeNode : VoxelNode
 {
     public int m_iDepth = 0, m_iLocalIndex = 0;
-    public float m_fHalfSize;
     public OctreeNode[] m_tSubNodes;
-    protected Vector3 m_vHalfExtents;
     public Vector3Int m_vLevelCoords;
     public OctreeNode m_oParent, m_oRoot;
 
-    private Color m_oMinColor = new Color(1.0f, 0.0f, 0.0f, 0.2f);
-    private Color m_oMaxColor = new Color(0f, 0f, 1.0f, 0.2f);
-    private Color m_oRandom;
-
-    private LayerMask m_iLayerMask;
-
-    public OctreeNode(Vector3 _vPosition, float _fHalfSize, OctreeNode _oParent = null)
+    public OctreeNode(Vector3 _vPosition, float _fHalfSize, OctreeNode _oParent = null) : base(_vPosition, _fHalfSize)
     {
-        m_oRandom = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 0.1f);
         m_vPosition = _vPosition;
         m_fHalfSize = _fHalfSize;
         m_vHalfExtents = new Vector3(_fHalfSize, _fHalfSize, _fHalfSize);
@@ -174,22 +165,7 @@ public class OctreeNode : Node
         //}
 
     }
-    public Vector3 GetPosition()
-    {
-        return m_vPosition;
-    }
-    public bool CheckCollision()
-    {
-        return Physics.OverlapBox(m_vPosition, m_vHalfExtents, Quaternion.identity,m_iLayerMask).Length > 0;
-    }
-    public void Connect(OctreeNode _oNode)
-    {
-        if (_oNode != null && m_bFree && _oNode.m_bFree && _oNode != this && !m_tNeighbours.Contains(_oNode))
-        {
-            m_tNeighbours.Add(_oNode);
-            _oNode.m_tNeighbours.Add(this);
-        }
-    }
+
     public OctreeNode GetFreeNodeFromCoordinates(Vector3Int _vLevelCoordinates, int _iDepth)
     {
         OctreeNode oTempNode = m_oRoot;

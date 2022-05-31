@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0127151661749540b6006eb13f8fe28, type: 3}
-  m_Name: Void PRM
+  m_Script: {fileID: 11500000, guid: 039b4dc7f183dd948b6531d24ed19f2f, type: 3}
+  m_Name: PRM 2
   m_EditorClassIdentifier: 
-  m_iSize: 8
-  m_iMapNumber: 1
-  m_iRepetitionsPerMap: 1
-  m_oMapType: {fileID: 11400000, guid: 4886fd8bc8186bc48a3c7f2c1d4d8435, type: 2}
-  m_tNodeMaps: []
-  m_oLastNodeMap: {fileID: 0}
+  m_bPathfindingInEdges: 0
+  m_bGenerated: 0
+  m_fMapHalfSize: 64
+  m_iNumberNodes: 1500
+  m_fNodeRadius: 1
+  m_fConnectRadius: 8
