@@ -8,8 +8,8 @@ public class Test : ScriptableObject
 {
     public int m_iSize, m_iMapNumber, m_iRepetitionsPerMap;
     public MapType m_oMapType;
-    public List<NodeMap> m_tNodeMaps = new List<NodeMap>();
-    public NodeMap m_oLastNodeMap;
+    public List<SpaceRepresentation> m_tSpaceRepresentations = new List<SpaceRepresentation>();
+    public SpaceRepresentation m_oLastSpaceRepresentation;
     public List<TestResult> m_tResults = new List<TestResult>();
 
 
@@ -24,29 +24,29 @@ public class Test : ScriptableObject
             double dMapTime = (oAfterGenerateMap - oBeforeGenerateMap).TotalMilliseconds;
 
             yield return new WaitForSeconds(0.05f);
-            for (int j = 0; j < m_tNodeMaps.Count; j++)
+            for (int j = 0; j < m_tSpaceRepresentations.Count; j++)
             {
-                NodeMap oNodeMap = m_tNodeMaps[j];
-                m_oLastNodeMap = oNodeMap;
+                SpaceRepresentation oSpaceRepresentation = m_tSpaceRepresentations[j];
+                m_oLastSpaceRepresentation = oSpaceRepresentation;
                 for (int k = 0; k < m_iRepetitionsPerMap; k++)
                 {
                     DateTime oBeforeGenerateNodes = HighResolutionDateTime.UtcNow;
-                    oNodeMap.GenerateMap(m_oMapType);
+                    oSpaceRepresentation.GenerateMap(m_oMapType);
                     DateTime oAfterGenerateNodes = HighResolutionDateTime.UtcNow;
-                    double dNodeMapTime = (oAfterGenerateNodes - oBeforeGenerateNodes).TotalMilliseconds;
+                    double dSpaceRepresentationTime = (oAfterGenerateNodes - oBeforeGenerateNodes).TotalMilliseconds;
 
-                    _oGoal.RandomPosition(m_oMapType, oNodeMap);
+                    _oGoal.RandomPosition(m_oMapType, oSpaceRepresentation);
                     DateTime oBeforeGeneratePath = HighResolutionDateTime.UtcNow;
-                    _oAgent.StartPath(m_oMapType, oNodeMap);
+                    _oAgent.StartPath(m_oMapType, oSpaceRepresentation);
                     DateTime oAfterGeneratePath = HighResolutionDateTime.UtcNow;
                     double dPathGenerationTime = (oAfterGeneratePath - oBeforeGeneratePath).TotalMilliseconds;
                     float fLength = _oAgent.CalculatePathLength();
 
 
-                    TestResult oResult = new TestResult(_iID, i, j, k, fLength, dMapTime, dNodeMapTime, dPathGenerationTime);
+                    TestResult oResult = new TestResult(_iID, i, j, k, fLength, dMapTime, dSpaceRepresentationTime, dPathGenerationTime);
                     m_tResults.Add(oResult);
 
-                    Debug.Log("Finished test " + _iID + " map " + i + " nodeMap " + j + " iteration " + k);
+                    Debug.Log("Finished test " + _iID + " map " + i + " SpaceRepresentation " + j + " iteration " + k);
                     yield return new WaitForSeconds(5f);
                 }
             }

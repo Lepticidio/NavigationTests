@@ -9,7 +9,7 @@ public class AStar : Pathfinder
 
     // Start is called before the first frame update
 
-    public override void GetPath(Vector3 _vStart, Vector3 _vEnd, NodeMap _oMap)
+    public override void GetPath(Vector3 _vStart, Vector3 _vEnd, SpaceRepresentation _oMap)
     {
         m_bPathFound = false;
         m_tCenters.Clear();

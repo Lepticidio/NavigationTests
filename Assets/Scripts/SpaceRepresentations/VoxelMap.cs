@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class VoxelMap : NodeMap
+public abstract class VoxelMap : SpaceRepresentation
 {
     public override Node GetNodeFromPosition(Vector3 _vPosition)
     {

@@ -72,12 +72,12 @@ public class AStarNode
             m_vPosition = (_oNodeA.m_vPosition + _oNodeB.m_vPosition) * 0.5f;
         }
     }
-    public AStarNode (NodeMap _oMap, Vector3 _vPosition)
+    public AStarNode (SpaceRepresentation _oMap, Vector3 _vPosition)
     {
         m_vPosition = _vPosition;
         m_tNodes.Add(_oMap.GetNodeFromPosition(_vPosition));
     }
-    public AStarNode(NodeMap _oMap, Node _oNode, Vector3 _vPosition)
+    public AStarNode(SpaceRepresentation _oMap, Node _oNode, Vector3 _vPosition)
     {
         m_vPosition = _vPosition;
         m_tNodes.Add(_oMap.GetConnectedNodeFromPosition(_vPosition, _oNode));

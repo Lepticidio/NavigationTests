@@ -9,7 +9,7 @@ public class PathEntity : MonoBehaviour
     public Vector3 m_vOffset;
     public float m_fRandomMargin, m_fObstacleFreeRadius;
 
-    public void RandomPosition(MapType _oMapType, NodeMap _oNodeMap)
+    public void RandomPosition(MapType _oMapType, SpaceRepresentation _oSpaceRepresentation)
     {
         if(m_bRandomPosition)
         {
@@ -17,7 +17,7 @@ public class PathEntity : MonoBehaviour
             bool bValidPosition = false;
             if (m_bDependentOnSize)
             {
-                m_vOffset = new Vector3(_oNodeMap.m_fMapHalfSize +  m_fRandomMargin - 1, 0, 0);
+                m_vOffset = new Vector3(_oSpaceRepresentation.m_fMapHalfSize +  m_fRandomMargin - 1, 0, 0);
             }
             if (!m_bPossitive)
             {

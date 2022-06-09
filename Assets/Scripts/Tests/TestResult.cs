@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class TestResult
 {
-    public int m_iTestID, m_iMapID, m_iNodeMapID, m_iIterationID;
+    public int m_iTestID, m_iMapID, m_iSpaceRepresentationID, m_iIterationID;
     public float m_fPathLength;
     public double m_dMapGenTime, m_dNodeGenTime, m_dPathGenTime;
 
 
-    public TestResult (int _iTestID, int _iMapID, int _iNodeMapID, int _iIterationID, float _fPathLength, double _dMapGenTime, double _dNodeGenTime, double _dPathGenTime)
+    public TestResult (int _iTestID, int _iMapID, int _iSpaceRepresentationID, int _iIterationID, float _fPathLength, double _dMapGenTime, double _dNodeGenTime, double _dPathGenTime)
     {
         m_iTestID = _iTestID;
         m_iMapID = _iMapID;
-        m_iNodeMapID = _iNodeMapID;
+        m_iSpaceRepresentationID = _iSpaceRepresentationID;
         m_iIterationID = _iIterationID;
         m_fPathLength = _fPathLength;
         m_dMapGenTime = _dMapGenTime;
@@ -28,7 +28,7 @@ public class TestResult
         sResult += ",";
         sResult += m_iMapID.ToString();
         sResult += ",";
-        sResult += m_iNodeMapID.ToString();
+        sResult += m_iSpaceRepresentationID.ToString();
         sResult += ",";
         sResult += m_iIterationID.ToString();
         sResult += ",";

@@ -41,18 +41,18 @@ public class TestController : MonoBehaviour
     {
         if(m_bDebug)
         {
-            if (m_oLastTest != null && m_oLastTest.m_oLastNodeMap != null)
+            if (m_oLastTest != null && m_oLastTest.m_oLastSpaceRepresentation != null)
             {
-                if (m_oLastTest.m_oLastNodeMap.m_bPathfindingInEdges)
+                if (m_oLastTest.m_oLastSpaceRepresentation.m_bPathfindingInEdges)
                 {
-                    VoxelOctree oOctree = m_oLastTest.m_oLastNodeMap as VoxelOctree;
+                    VoxelOctree oOctree = m_oLastTest.m_oLastSpaceRepresentation as VoxelOctree;
                     if (oOctree != null && oOctree.m_oRoot != null)
                     {
                         oOctree.m_oRoot.Draw(oOctree.m_fMapHalfSize);
                     }
                     else
                     {
-                        GridMap oGrid = m_oLastTest.m_oLastNodeMap as GridMap;
+                        GridMap oGrid = m_oLastTest.m_oLastSpaceRepresentation as GridMap;
                         if(oGrid != null)
                         {
                             for (int i = 0; i < oGrid.m_tNodes.Count; i++)
@@ -64,7 +64,7 @@ public class TestController : MonoBehaviour
                 }
                 else
                 {
-                    ProbabilisticRoadMap oPRM = m_oLastTest.m_oLastNodeMap as ProbabilisticRoadMap;
+                    ProbabilisticRoadMap oPRM = m_oLastTest.m_oLastSpaceRepresentation as ProbabilisticRoadMap;
 
                     for (int i = 0; i < oPRM.m_tFreeNodes.Count; i++)
                     {

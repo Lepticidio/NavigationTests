@@ -14,12 +14,12 @@ public class Agent : PathEntity
     public List<Vector3> m_tCurrentPath;
     // Start is called before the first frame update
 
-    public void StartPath(MapType _oMapType, NodeMap _oNodeMap)
+    public void StartPath(MapType _oMapType, SpaceRepresentation _oSpaceRepresentation)
     {
         m_bPathCreated = false;
         m_bMoving = false;
-        RandomPosition(_oMapType, _oNodeMap);
-        CreatePath(_oNodeMap);
+        RandomPosition(_oMapType, _oSpaceRepresentation);
+        CreatePath(_oSpaceRepresentation);
 
     }
 
@@ -43,9 +43,9 @@ public class Agent : PathEntity
             }
         }
     }
-    public void CreatePath(NodeMap _oNodeMap)
+    public void CreatePath(SpaceRepresentation _oSpaceRepresentation)
     {
-        m_oPathfinder.GetPath(transform.position, m_oGoal.position, _oNodeMap);
+        m_oPathfinder.GetPath(transform.position, m_oGoal.position, _oSpaceRepresentation);
         //while(!m_oPathfinder.m_bPathFound)
         //{
         //    yield return null;

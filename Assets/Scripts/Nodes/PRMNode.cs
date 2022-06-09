@@ -49,7 +49,7 @@ public class PRMNode : Node
             Gizmos.color = new Color(0, 1, 0, 0.5f);
         }
         Gizmos.DrawSphere(m_vPosition, m_fNodeRadius);
-        Gizmos.color = new Color(1, 0, 0, 0.25f);
+        Gizmos.color = new Color(1, 0, 0, 0.125f);
         for (int i = 0; i < m_tNeighbours.Count; i++)
         {
             Gizmos.DrawLine(m_vPosition, m_tNeighbours[i].m_vPosition);

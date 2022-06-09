@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class NodeMap : ScriptableObject
+public abstract class SpaceRepresentation : ScriptableObject
 {
     public bool m_bPathfindingInEdges;
     public bool m_bGenerated = false;

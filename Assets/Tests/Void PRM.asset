@@ -16,5 +16,6 @@ MonoBehaviour:
   m_iMapNumber: 1
   m_iRepetitionsPerMap: 1
   m_oMapType: {fileID: 11400000, guid: 4886fd8bc8186bc48a3c7f2c1d4d8435, type: 2}
-  m_tNodeMaps: []
-  m_oLastNodeMap: {fileID: 0}
+  m_tSpaceRepresentations:
+  - {fileID: 11400000, guid: a26382d23dfcf3a4ca0e4256e7d2127d, type: 2}
+  m_oLastSpaceRepresentation: {fileID: 0}

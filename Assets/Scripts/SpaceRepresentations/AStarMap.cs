@@ -5,12 +5,12 @@ using UnityEngine;
 public class AStarMap
 {
     public bool m_bGenerated = false, m_bConnected = false;
-    NodeMap m_oBaseMap;
+    SpaceRepresentation m_oBaseMap;
     public List<AStarNode> m_tFreeNodes = new List<AStarNode>();
     public Dictionary<Node, List<AStarNode>> m_tNodeListDictionary = new Dictionary<Node, List<AStarNode>>();
     public Dictionary<Node, AStarNode> m_tNodeDictionary = new Dictionary<Node, AStarNode>();
 
-    public AStarMap(NodeMap _oMap)
+    public AStarMap(SpaceRepresentation _oMap)
     {
         m_oBaseMap = _oMap;
     }
