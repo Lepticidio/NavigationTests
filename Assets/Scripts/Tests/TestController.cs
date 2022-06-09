@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Runtime.InteropServices;
 
 public class TestController : MonoBehaviour
 {
@@ -19,14 +21,14 @@ public class TestController : MonoBehaviour
 
     public IEnumerator RunTests()
     {
+        DateTime oInitialTime = HighResolutionDateTime.UtcNow;
         for (int i = 0; i < m_tTestsToRun.Count; i++)
         {
             Debug.Log("Test: " + i.ToString());
             m_oLastTest = m_tTestsToRun[i];
-            yield return StartCoroutine(m_tTestsToRun[i].RunTests(i, m_oMapGen, m_oAgent, m_oGoal));
+            yield return StartCoroutine(m_tTestsToRun[i].RunTests(i, m_oMapGen, m_oAgent, m_oGoal, oInitialTime));
             m_tTestResults.AddRange(m_tTestsToRun[i].m_tResults);
         }
-        Debug.Log("Tests finished");
 
         string sToExport = "";
         for (int i = 0; i < m_tTestResults.Count; i++)

@@ -20,7 +20,6 @@ public class ProbabilisticRoadMap : SpaceRepresentation
         CalculateHalfSize(_oMapType);
         int iCounter = 0;
         int iCounterLimit = 100000;
-        Debug.Log("Number nodes: " + m_fNodeDensity * _oMapType.GetTridimensionalSize());
         while(m_tFreeNodes.Count < m_fNodeDensity * _oMapType.GetTridimensionalSize() && iCounter < iCounterLimit)
         {
             PRMNode oNode = new PRMNode(new Vector3(Random.Range(-m_fMapHalfSize, m_fMapHalfSize), Random.Range(-m_fMapHalfSize, m_fMapHalfSize), Random.Range(-m_fMapHalfSize, m_fMapHalfSize)), m_fNodeRadius, m_fConnectRadius);
@@ -43,7 +42,6 @@ public class ProbabilisticRoadMap : SpaceRepresentation
             ClearUnderTerrainNodes();
         }
         ConnectNeighbours();
-        Debug.Log("Generated");
         m_bGenerated = true;
     }
 

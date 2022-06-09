@@ -1085,7 +1085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1702170867
 Transform:
   m_ObjectHideFlags: 0
@@ -1367,7 +1367,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bDebug: 1
   m_tTestsToRun:
-  - {fileID: 11400000, guid: 622547cc3e435f6409fe906b8b9ba26d, type: 2}
+  - {fileID: 11400000, guid: bac97260bcb143b4f9d0b0ff873b8370, type: 2}
+  - {fileID: 11400000, guid: 14e4d7f895c295b4aabedf3d0633a19d, type: 2}
   m_oAgent: {fileID: 2740412930994974039}
   m_oGoal: {fileID: 2116855141}
   m_oMapGen: {fileID: 2037424130}
@@ -1496,7 +1497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b04fd820880ef4f86891f52ce60b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bRandomPosition: 0
+  m_bRandomPosition: 1
   m_bDependentOnSize: 1
   m_bPossitive: 0
   m_vOffset: {x: 0, y: 0, z: 0}
@@ -1543,7 +1544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_bRandomPosition
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 111119792112053891, guid: d263253827119e742b00f655c2c6b3f2, type: 3}
       propertyPath: m_bDependentOnSize

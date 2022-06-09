@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class TestResult
 {
-    public int m_iTestID, m_iMapID, m_iSpaceRepresentationID, m_iIterationID;
+    public string m_sSpaceRepresentationName;
+    public int m_iTestID, m_iMapID, m_iSpaceRepresentationID, m_iIterationID, m_iNumberNodes, m_iNumberObstacles, m_iMapSize;
     public float m_fPathLength;
-    public double m_dMapGenTime, m_dNodeGenTime, m_dPathGenTime;
+    public double m_dMapGenTime, m_dNodeGenTime, m_dPathGenTime, m_dTestTime, m_dTotalTime;
 
 
     public TestResult (int _iTestID, int _iMapID, int _iSpaceRepresentationID, int _iIterationID, float _fPathLength, double _dMapGenTime, double _dNodeGenTime, double _dPathGenTime)
@@ -28,17 +29,43 @@ public class TestResult
         sResult += ",";
         sResult += m_iMapID.ToString();
         sResult += ",";
+        sResult += "Map Size";
+        sResult += ",";
+        sResult += m_iMapSize.ToString();
+        sResult += ",";
+        sResult += "Obstacles";
+        sResult += ",";
+        sResult += m_iNumberObstacles.ToString();
+        sResult += ",";
+        sResult += m_sSpaceRepresentationName;
+        sResult += ",";
         sResult += m_iSpaceRepresentationID.ToString();
         sResult += ",";
         sResult += m_iIterationID.ToString();
+        sResult += ",";
+        sResult += m_iNumberNodes.ToString();
+        sResult += ",";
+        sResult += "Path Length";
         sResult += ",";
         sResult += m_fPathLength.ToString();
         sResult += ",";
         sResult += m_dMapGenTime.ToString();
         sResult += ",";
+        sResult += "Repr Time";
+        sResult += ",";
         sResult += m_dNodeGenTime.ToString();
         sResult += ",";
+        sResult += "Path Time";
+        sResult += ",";
         sResult += m_dPathGenTime.ToString();
+        sResult += ",";
+        sResult += "Test Time";
+        sResult += ",";
+        sResult += (m_dTestTime/1000).ToString();
+        sResult += ",";
+        sResult += "Total Time";
+        sResult += ",";
+        sResult += (m_dTotalTime/1000).ToString();
 
         return sResult;
     }
