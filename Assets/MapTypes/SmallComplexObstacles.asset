@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17299d74e9a1d7647b712ea128b7a4a1, type: 3}
-  m_Name: ComplexObstaclesSmall
+  m_Name: SmallComplexObstacles
   m_EditorClassIdentifier: 
   m_bNoTerrain: 1
   m_bFlatExtremes: 0

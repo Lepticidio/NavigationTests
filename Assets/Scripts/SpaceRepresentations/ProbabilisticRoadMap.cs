@@ -88,8 +88,8 @@ public class ProbabilisticRoadMap : SpaceRepresentation
                         if(m_tNodesByPosition.ContainsKey(vPoint))
                         {
                             PRMNode oNeighbour = m_tNodesByPosition[vPoint];
-                            //if (!oNode.m_tNeighbours.Contains(oNeighbour))
-                            //{
+                            if (!oNode.m_tNeighbours.Contains(oNeighbour))
+                            {
                                 Vector3 vDir = oNeighbour.m_vPosition - oNode.m_vPosition;
                                 float fDistance = vDir.magnitude;
                                 RaycastHit oInfo;
@@ -99,7 +99,7 @@ public class ProbabilisticRoadMap : SpaceRepresentation
                                     oNode.m_tNeighbours.Add(oNeighbour);
                                     oNeighbour.m_tNeighbours.Add(oNode);
                                 }
-                            //}
+                            }
                         }
                     }
                 }
