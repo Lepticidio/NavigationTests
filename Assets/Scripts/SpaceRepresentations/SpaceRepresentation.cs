@@ -6,6 +6,7 @@ public abstract class SpaceRepresentation : ScriptableObject
 {
     public bool m_bPathfindingInEdges;
     public bool m_bGenerated = false;
+    public int m_iNumberConnections = 0;
     public float m_fMapHalfSize;
     public List<Node> m_tFreeNodes = new List<Node>();
 
@@ -22,7 +23,14 @@ public abstract class SpaceRepresentation : ScriptableObject
         m_fMapHalfSize = fResult;
     }
 
-    public abstract void GenerateMap(MapType _oMapType);
+    public virtual void GenerateMap(MapType _oMapType)
+    {
+        m_bGenerated = false;
+        m_tFreeNodes.Clear();
+        
+        CalculateHalfSize(_oMapType);
+        m_iNumberConnections = 0;
+    }
     public virtual Node GetNodeFromPosition(Vector3 _vPosition)
     {
         LayerMask iLayerMask = ~(LayerMask.GetMask("Agent") | LayerMask.GetMask("Goal"));

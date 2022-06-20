@@ -197,33 +197,33 @@ public class OctreeNode : VoxelNode
         }
         return oResult;
     }
-    public void ConnectNeighbours()
+    public void ConnectNeighbours(SpaceRepresentation _oRepresentation)
     {
         float fMaxSize = Mathf.Pow(2, m_iDepth);
         if (m_vLevelCoords.x < fMaxSize - 1)
         {
-            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.right, m_iDepth));
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.right, m_iDepth), _oRepresentation);
         }
         if (m_vLevelCoords.x > 0)
         {
-            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.left, m_iDepth));
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.left, m_iDepth), _oRepresentation);
 
         }
         if (m_vLevelCoords.y < fMaxSize - 1)
         {
-            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.up, m_iDepth));
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.up, m_iDepth), _oRepresentation);
         }
         if (m_vLevelCoords.y > 0)
         {
-            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.down, m_iDepth));
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.down, m_iDepth), _oRepresentation);
         }
         if (m_vLevelCoords.z < fMaxSize - 1)
         {
-            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.forward, m_iDepth));
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.forward, m_iDepth), _oRepresentation);
         }
         if (m_vLevelCoords.z > 0)
         {
-            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.back, m_iDepth));
+            Connect(GetFreeNodeFromCoordinates(m_vLevelCoords + Vector3Int.back, m_iDepth), _oRepresentation);
         }
     }
 

@@ -13,11 +13,9 @@ public class ProbabilisticRoadMap : SpaceRepresentation
     public KDTree m_oKTree;
     public override void GenerateMap(MapType _oMapType)
     {
-        m_bGenerated = false;
-        m_tFreeNodes.Clear();
+        base.GenerateMap(_oMapType);
         m_tNodesByPosition.Clear();
         m_tPositions.Clear();
-        CalculateHalfSize(_oMapType);
         int iCounter = 0;
         int iCounterLimit = 100000;
         while(m_tFreeNodes.Count < m_fNodeDensity * _oMapType.GetTridimensionalSize() && iCounter < iCounterLimit)
@@ -96,8 +94,7 @@ public class ProbabilisticRoadMap : SpaceRepresentation
                                 bool bCollision = Physics.SphereCast(oNode.m_vPosition, 0.5f, vDir, out oInfo, fDistance, iLayerMask);
                                 if (!bCollision)
                                 {
-                                    oNode.m_tNeighbours.Add(oNeighbour);
-                                    oNeighbour.m_tNeighbours.Add(oNode);
+                                    oNode.Connect(oNeighbour, this);
                                 }
                             }
                         }
@@ -119,8 +116,7 @@ public class ProbabilisticRoadMap : SpaceRepresentation
                         bool bCollision = Physics.SphereCast(m_tFreeNodes[j].m_vPosition, 0.5f, vDir, out oInfo, fDistance, iLayerMask);
                         if (!bCollision)
                         {
-                            m_tFreeNodes[i].m_tNeighbours.Add(m_tFreeNodes[j]);
-                            m_tFreeNodes[j].m_tNeighbours.Add(m_tFreeNodes[i]);
+                            m_tFreeNodes[i].Connect(m_tFreeNodes[j], this);
                         }
                     }
 

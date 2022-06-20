@@ -48,6 +48,7 @@ public class Test : ScriptableObject
                     oResult.m_iMapSize = m_oMapType.m_iMapSize;
                     oResult.m_iNumberNodes = oSpaceRepresentation.m_tFreeNodes.Count;
                     oResult.m_sSpaceRepresentationName = oSpaceRepresentation.ToString();
+                    oResult.m_iNumberConnections = m_oLastSpaceRepresentation.m_iNumberConnections;
 
                     DateTime oEndTestTime = HighResolutionDateTime.UtcNow;
                     double dTestTime = (oEndTestTime - oBeforeGenerateNodes).TotalMilliseconds;

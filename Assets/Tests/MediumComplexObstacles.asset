@@ -23,4 +23,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3711a24d0143cbb47b345a43e84f3644, type: 2}
   - {fileID: 11400000, guid: 02421f5ff5ea373498b8f9347544db54, type: 2}
   - {fileID: 11400000, guid: 78d44700d0dbfb24181ab2b13a11419e, type: 2}
+  - {fileID: 11400000, guid: 20406683ff38a13489345e1f6730f7a3, type: 2}
+  - {fileID: 11400000, guid: 63a11fa1c40508644a50411ce6a0513f, type: 2}
   m_oLastSpaceRepresentation: {fileID: 0}

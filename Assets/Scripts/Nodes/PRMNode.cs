@@ -20,7 +20,7 @@ public class PRMNode : Node
         //return Physics.OverlapBox(m_vPosition, new Vector3(m_fNodeRadius, m_fNodeRadius, m_fNodeRadius), Quaternion.identity, m_iLayerMask).Length > 0;
         return Physics.OverlapSphere(m_vPosition, m_fNodeRadius, m_iLayerMask).Length > 0;
     }
-    public void ConnectNeighbours(List<Node> _tNodes)
+    public void ConnectNeighbours(List<Node> _tNodes, SpaceRepresentation _oRepresentation)
     {
         for(int i = 0; i < _tNodes.Count; i ++)
         {
@@ -33,8 +33,7 @@ public class PRMNode : Node
                     bool bCollision = Physics.Raycast(m_vPosition, vDir, fDistance, m_iLayerMask);
                     if (!bCollision)
                     {
-                        m_tNeighbours.Add(_tNodes[i]);
-                        _tNodes[i].m_tNeighbours.Add(this);
+                        Connect(_tNodes[i], _oRepresentation);
                     }
                 }
             }

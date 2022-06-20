@@ -22,14 +22,6 @@ public class VoxelNode : Node
     {
         return Physics.OverlapBox(m_vPosition, m_vHalfExtents, Quaternion.identity, m_iLayerMask).Length > 0;
     }
-    public void Connect(VoxelNode _oNode)
-    {
-        if (_oNode != null && m_bFree && _oNode.m_bFree && _oNode != this && !m_tNeighbours.Contains(_oNode))
-        {
-            m_tNeighbours.Add(_oNode);
-            _oNode.m_tNeighbours.Add(this);
-        }
-    }
     public void Draw(float _fMaxSize)
     {
         Gizmos.color = Color.black;

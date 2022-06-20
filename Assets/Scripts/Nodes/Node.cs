@@ -52,4 +52,13 @@ public abstract class Node
         }
         return _bResult;
     }
+    public void Connect(Node _oNode, SpaceRepresentation _oRepresentation)
+    {
+        if (_oNode != null && m_bFree && _oNode.m_bFree && _oNode != this && !m_tNeighbours.Contains(_oNode))
+        {
+            m_tNeighbours.Add(_oNode);
+            _oNode.m_tNeighbours.Add(this);
+            _oRepresentation.m_iNumberConnections++;
+        }
+    }
 }

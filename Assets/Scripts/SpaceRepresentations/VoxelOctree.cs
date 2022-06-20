@@ -11,10 +11,7 @@ public class VoxelOctree : VoxelMap
 
     public override void GenerateMap(MapType _oMapType)
     {
-        m_bGenerated = false;
-        m_tFreeNodes.Clear();
-        CalculateHalfSize(_oMapType);
-        Debug.Log("Size calculated: " + m_fMapHalfSize);
+        base.GenerateMap(_oMapType);
         m_oRoot = new OctreeNode(Vector3.zero, m_fMapHalfSize );
         m_oRoot.Subdivide(1, m_tFreeNodes);
         if (!_oMapType.m_bNoTerrain)
@@ -30,7 +27,7 @@ public class VoxelOctree : VoxelMap
         for(int i = 0; i < m_tFreeNodes.Count; i++)
         {
             OctreeNode oNode = m_tFreeNodes[i] as OctreeNode;
-            oNode.ConnectNeighbours();
+            oNode.ConnectNeighbours(this);
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TestResult
 {
     public string m_sSpaceRepresentationName;
-    public int m_iTestID, m_iMapID, m_iSpaceRepresentationID, m_iIterationID, m_iNumberNodes, m_iNumberObstacles, m_iMapSize;
+    public int m_iTestID, m_iMapID, m_iSpaceRepresentationID, m_iIterationID, m_iNumberNodes, m_iNumberConnections, m_iNumberObstacles, m_iMapSize;
     public float m_fPathLength;
     public double m_dMapGenTime, m_dNodeGenTime, m_dPathGenTime, m_dTestTime, m_dTotalTime;
 
@@ -43,7 +43,13 @@ public class TestResult
         sResult += ",";
         sResult += m_iIterationID.ToString();
         sResult += ",";
+        sResult += "Nodes";
+        sResult += ",";
         sResult += m_iNumberNodes.ToString();
+        sResult += ",";
+        sResult += "Connections";
+        sResult += ",";
+        sResult += m_iNumberConnections.ToString();
         sResult += ",";
         sResult += "Path Length";
         sResult += ",";

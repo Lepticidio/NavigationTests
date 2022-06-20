@@ -8,10 +8,8 @@ public class GridMap : VoxelMap
     public List<VoxelNode> m_tNodes = new List<VoxelNode>();
     public override void GenerateMap(MapType _oMapType)
     {
-        m_bGenerated = false;
+        base.GenerateMap(_oMapType);
         m_tNodes.Clear();
-        m_tFreeNodes.Clear();
-        CalculateHalfSize(_oMapType);
 
         for (int x = -(int)m_fMapHalfSize; x < (int)m_fMapHalfSize; x++)
         {
@@ -33,34 +31,34 @@ public class GridMap : VoxelMap
                                 if (z > -m_fMapHalfSize)
                                 {
                                     VoxelNode oNeighbour = GetNodeFromCoordinates(x - 1, y - 1, z - 1);
-                                    oNode.Connect(oNeighbour);
+                                    oNode.Connect(oNeighbour, this);
 
                                 }
                                 VoxelNode oNeighbour2 = GetNodeFromCoordinates(x - 1, y - 1, z);
-                                oNode.Connect(oNeighbour2);                                
+                                oNode.Connect(oNeighbour2, this);                                
                             }
                             if (z > -m_fMapHalfSize)
                             {
                                 VoxelNode oNeighbour2 = GetNodeFromCoordinates(x - 1, y, z - 1);
-                                oNode.Connect(oNeighbour2);
+                                oNode.Connect(oNeighbour2, this);
                             }
                             VoxelNode oNeighbour3 = GetNodeFromCoordinates(x - 1, y, z);
-                            oNode.Connect(oNeighbour3);                            
+                            oNode.Connect(oNeighbour3, this);                            
                         }
                         if (y > -m_fMapHalfSize)
                         {
                             if (z > -m_fMapHalfSize)
                             {
                                 VoxelNode oNeighbour = GetNodeFromCoordinates(x, y - 1, z - 1);
-                                oNode.Connect(oNeighbour);
+                                oNode.Connect(oNeighbour, this);
                             }
                             VoxelNode oNeighbour2 = GetNodeFromCoordinates(x, y - 1, z);
-                            oNode.Connect(oNeighbour2);
+                            oNode.Connect(oNeighbour2, this);
                         }
                         if (z > -m_fMapHalfSize)
                         {
                             VoxelNode oNeighbour = GetNodeFromCoordinates(x, y, z - 1);
-                            oNode.Connect(oNeighbour);
+                            oNode.Connect(oNeighbour, this);
                         }
                     }
                 }

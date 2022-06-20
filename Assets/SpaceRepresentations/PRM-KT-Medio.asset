@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 039b4dc7f183dd948b6531d24ed19f2f, type: 3}
-  m_Name: PRM-KT-Denso
+  m_Name: PRM-KT-Medio
   m_EditorClassIdentifier: 
   m_bPathfindingInEdges: 0
   m_bGenerated: 1
   m_fMapHalfSize: 8
   m_bUsesKTrees: 1
   m_fNodeRadius: 1
-  m_fConnectRadius: 4
-  m_fNodeDensity: 0.00002
+  m_fConnectRadius: 8
+  m_fNodeDensity: 0.00001
   m_tPositions: []
